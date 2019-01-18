@@ -1,5 +1,0 @@
-<launch>
-    <node pkg = "pkgser" name = "motor" type = "motor" output = "screen"/>
-    
-    <rosparam file="$(find pkgser)/param/motor.yaml" command="load" />
-</launch>

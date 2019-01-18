@@ -1,8 +1,0 @@
-prefix=/home/sf/caktin_ws/devel
-
-Name: ira_laser_tools
-Description: Description of ira_laser_tools
-Version: 1.0.0
-Cflags: -I/home/sf/caktin_ws/devel/include
-Libs: -L/home/sf/caktin_ws/devel/lib 
-Requires: 

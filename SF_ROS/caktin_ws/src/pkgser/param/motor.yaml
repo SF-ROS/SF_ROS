@@ -1,8 +1,0 @@
-motor:
-  port : "/dev/motor"
-  baud_rate : 9600
-  vel : -300
-  control_rate : 10.0
-  robotL : 0.47
-  robotV : 100
-  robotOmega : 100

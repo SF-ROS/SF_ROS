@@ -1,8 +1,0 @@
-prefix=/home/sf/caktin_ws/devel
-
-Name: stereo_image_proc
-Description: Description of stereo_image_proc
-Version: 1.12.23
-Cflags: -I/home/sf/caktin_ws/devel/include -I/home/sf/caktin_ws/src/image_pipeline/stereo_image_proc/include
-Libs: -L/home/sf/caktin_ws/devel/lib -lstereo_image_proc
-Requires: image_geometry image_proc sensor_msgs stereo_msgs

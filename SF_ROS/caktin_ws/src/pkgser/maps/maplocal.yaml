@@ -1,7 +1,0 @@
-image: /home/sf/文档/caktin_ws/src/pkgser/maps/maplocal.pgm
-resolution: 0.050000
-origin: [-26.600000, -15.400000, 0.000000]
-negate: 0
-occupied_thresh: 0.65
-free_thresh: 0.196
-

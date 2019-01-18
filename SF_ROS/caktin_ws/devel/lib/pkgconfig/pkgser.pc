@@ -1,8 +1,0 @@
-prefix=/home/sf/caktin_ws/devel
-
-Name: pkgser
-Description: Description of pkgser
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/sf/caktin_ws/devel/lib 
-Requires: 

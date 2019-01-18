@@ -1,8 +1,0 @@
-prefix=/home/sf/caktin_ws/devel
-
-Name: rplidar_ros
-Description: Description of rplidar_ros
-Version: 1.7.0
-Cflags: 
-Libs: -L/home/sf/caktin_ws/devel/lib 
-Requires: 
