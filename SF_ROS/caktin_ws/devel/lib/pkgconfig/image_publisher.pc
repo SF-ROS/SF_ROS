@@ -1,0 +1,8 @@
+prefix=/home/sf/caktin_ws/devel
+
+Name: image_publisher
+Description: Description of image_publisher
+Version: 1.12.23
+Cflags: -I/home/sf/caktin_ws/devel/include
+Libs: -L/home/sf/caktin_ws/devel/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/sf/caktin_ws/devel
+
+Name: costmap_converter
+Description: Description of costmap_converter
+Version: 0.0.9
+Cflags: -I/home/sf/caktin_ws/devel/include -I/home/sf/caktin_ws/src/costmap_converter-master/include
+Libs: -L/home/sf/caktin_ws/devel/lib -lcostmap_converter
+Requires: geometry_msgs pluginlib roscpp std_msgs message_runtime dynamic_reconfigure costmap_2d

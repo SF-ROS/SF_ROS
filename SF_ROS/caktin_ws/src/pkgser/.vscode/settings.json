@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "*.cpp": "cpp",
+        "functional": "cpp",
+        "iosfwd": "cpp",
+        "string": "cpp",
+        "cmath": "cpp",
+        "iomanip": "cpp",
+        "iostream": "cpp",
+        "*.ipp": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp"
+    }
+}

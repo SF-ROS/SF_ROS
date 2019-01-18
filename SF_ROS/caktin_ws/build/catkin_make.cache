@@ -1,0 +1,2 @@
+async_web_server_cpp:costmap_converter-master:image_pipeline/camera_calibration:image_pipeline/depth_image_proc:image_pipeline/image_pipeline:image_pipeline/image_proc:image_pipeline/image_publisher:image_pipeline/image_rotate:image_pipeline/image_view:image_pipeline/stereo_image_proc:ira_laser_tools-master:pkgser:robot_pose_publisher:rplidar_ros:serial:web_video_server
+-DCATKIN_DEVEL_PREFIX=/home/sf/caktin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/sf/caktin_ws/install -G Unix Makefiles
