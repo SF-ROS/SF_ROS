@@ -1,8 +1,0 @@
-prefix=/home/sf/caktin_ws/install
-
-Name: serial
-Description: Description of serial
-Version: 1.2.1
-Cflags: -I/home/sf/caktin_ws/install/include
-Libs: -L/home/sf/caktin_ws/install/lib -lserial -lrt -lpthread
-Requires: 
