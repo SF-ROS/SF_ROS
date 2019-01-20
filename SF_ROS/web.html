@@ -95,7 +95,6 @@ function init() {
     var len2 = state.temp_pose_list.length;
     for (var j = 0; j < len2; j++){
       state.navigator.sendGoal(state.temp_pose_list[j]);
-      state.goal_list.push(goal)
     }
   };
 
