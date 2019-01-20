@@ -7,9 +7,6 @@ var NAV2D = NAV2D || {
     REVISION: '0.3.0'
 };
 
-var goal_list = [];
-var temp_pose_list = [];
-
 NAV2D.ImageMapClientNav = function(options) {
   var that = this;
   options = options || {};
@@ -26,7 +23,6 @@ NAV2D.ImageMapClientNav = function(options) {
   var withOrientation = options.withOrientation || false;
   var old_state = null;
 
-
   // setup a client to get the map
   var client = new ROS2D.ImageMapClient({
     ros : ros,
@@ -35,7 +31,7 @@ NAV2D.ImageMapClientNav = function(options) {
     image : image_map
   });
 
-  var navigator = new NAV2D.Navigator({
+  this.navigator = new NAV2D.Navigator({
     ros: ros,
     tfClient: tfClient,
     serverName: serverName,
@@ -43,7 +39,7 @@ NAV2D.ImageMapClientNav = function(options) {
     robot_pose : robot_pose,
     rootObject: rootObject,
     withOrientation: withOrientation,
-    image: image
+    image: image,
   });
 
   client.on('change', function() {
@@ -80,19 +76,8 @@ NAV2D.Navigator = function(options) {
   var withOrientation = options.withOrientation || false;
   var use_image = options.image;
   this.rootObject = options.rootObject || new createjs.Container();
-
-  var cancel_btn_current = document.getElementById("cancel_nav_current");
-  var cancel_btn_all = document.getElementById("cancel_nav_all");
-  var start_btn = document.getElementById("start");
-  var post_btn = document.getElementById("pose");
-  var mark_btn = document.getElementById("mark");
-
-  var is_naving = false;
-  var is_cancel = false;
-  var is_arrow = false;
-
-  this.goalMarker = null;
   
+  this.goalMarker = null;
   var currentGoal;
 
   // setup the actionlib client
@@ -106,8 +91,9 @@ NAV2D.Navigator = function(options) {
    * Send a goal to the navigation stack with the given pose.
    *
    * @param pose - the goal pose
+   * 
    */
-  function sendGoal(pose) {
+  this.sendGoal = function(pose) {
     // create a goal
     var goal = new ROSLIB.Goal({
       actionClient : actionClient,
@@ -120,49 +106,31 @@ NAV2D.Navigator = function(options) {
         }
       }
     });
-    goal_list.push(goal);
 
-	// create a marker for the goal
-	var goalMarker = new ROS2D.NavigationArrow({
-	    size: 15,
-	    strokeSize: 1,
-	    fillColor: createjs.Graphics.getRGB(255, 64, 128, 0.66),
-	    pulse: true
-	});
-	goalMarker.x = pose.position.x;
-	goalMarker.y = -pose.position.y;
-	goalMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.orientation);
-	goalMarker.scaleX = 1.0 / stage.scaleX;
-	goalMarker.scaleY = 1.0 / stage.scaleY;
+    state.goal_list.push(goal);
 
-	that.rootObject.addChild(goalMarker);
+    // create a marker for the goal
+    var goalMarker = new ROS2D.NavigationArrow({
+        size: 15,
+        strokeSize: 1,
+        fillColor: createjs.Graphics.getRGB(255, 64, 128, 0.66),
+        pulse: true
+    });
+    goalMarker.x = pose.position.x;
+    goalMarker.y = -pose.position.y;
+    goalMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.orientation);
+    goalMarker.scaleX = 1.0 / stage.scaleX;
+    goalMarker.scaleY = 1.0 / stage.scaleY;
 
-
-
-	goal.on('result', function () {
-	    is_naving = false;
-	    is_arrow = false;
-	    that.rootObject.removeChild(goalMarker);
-        goal_list.shift();
-
-
-        if(!is_cancel){
-         temp_pose_list.shift();
-        }
-        // if(goal_list.length>0){
-        //   goal = goal_list[0];
-        //   that.currentGoal = goal;
-        //   goal.send();
-        //   is_naving = true;
-        // }
-        if (goal_list.length==0){
-          is_cancel = false;
-        }
-
-	});
-
+    that.rootObject.addChild(goalMarker);
+    goal.on('result', function () {
+      that.rootObject.removeChild(goalMarker);
+      if (state.goal_result_callback) {
+        state.goal_result_callback();
+      }
+    });
   }
-  
+
   /**
    * Cancel the currently active goal.
    */
@@ -171,86 +139,6 @@ NAV2D.Navigator = function(options) {
       that.currentGoal.cancel();
     }
   };
-
-
-  //开始导航方法
-  function Start(){
-    if(!is_naving){
-      goal = goal_list[0];
-	  that.currentGoal = goal;
-      goal.send();
-      is_naving = true;
-    }
-    is_cancel = false;
-  }
-
-  //取消所有目标方法
-  function CancelAll(){
-    var len = goal_list.length;
-    for (var i=0;i<len;i++){
-      goal = goal_list[i];
-      goal.send();
-      goal.cancel();
-    }
-  }
-
-  //开始导航
-  start_btn.onclick = function(){
-    if (goal_list.length>0){
-      Start();
-    }
-  };
-
-  //取消当前目标和对应暂存点
-  cancel_btn_current.onclick = function () {
-    that.currentGoal.cancel();
-  };
-
-  //取消所有目标和暂存点
-  cancel_btn_all.onclick = function () {
-    if (goal_list.length>0){
-      CancelAll();
-    }
-    temp_pose_list=[];
-  };
-
-  //暂停
-  post_btn.onclick = function () {
-      is_cancel = true ;
-      CancelAll();
-      var len2 = temp_pose_list.length;
-      for (var j=0;j<len2;j++){
-        sendGoal(temp_pose_list[j]);
-        console.log(temp_pose_list[j]);
-      }
-  };
-
-  //标记
-  mark_btn.onclick = function () {
-    pose = temp_pose_list[0];
-    temp_pose_list = [];
-    var goalMarker = new ROS2D.NavigationArrow({
-	    size: 15,
-	    strokeSize: 1,
-	    fillColor: createjs.Graphics.getRGB(0, 255, 0, 0.66),
-	    pulse: false
-	});
-	goalMarker.x = pose.position.x;
-	goalMarker.y = -pose.position.y;
-	goalMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.orientation);
-	goalMarker.scaleX = 1.0 / stage.scaleX;
-	goalMarker.scaleY = 1.0 / stage.scaleY;
-
-	that.rootObject.addChild(goalMarker);
-
-	var text = new createjs.Text("充电座", "10px Arial", "#ff7700");
-	text.x = pose.position.x-0.5;
-    text.y = -pose.position.y+0.5;
-    text.scaleX = 1.0/ stage.scaleX;
-    text.scaleY = 1.0/ stage.scaleY;
-	that.rootObject.addChild(text);
-  };
-
 
   // get a handle to the stage
   var stage;
@@ -323,7 +211,7 @@ NAV2D.Navigator = function(options) {
         position : new ROSLIB.Vector3(coords)
       });
       // send the goal
-      sendGoal(pose);
+      that.sendGoal(pose);
     });
   } else { // withOrientation === true
     // setup a click-and-point listener (with orientation)
@@ -426,9 +314,10 @@ NAV2D.Navigator = function(options) {
           orientation : orientation
         });
 
-        temp_pose_list.push(pose);
+        state.temp_pose_list.push(pose);
+
         // send the goal
-        sendGoal(pose);
+        that.sendGoal(pose);
       }
     };
 
@@ -452,6 +341,7 @@ NAV2D.Navigator = function(options) {
 NAV2D.OccupancyGridClientNav = function (options) {
     var that = this;
     options = options || {};
+    state = options.state || {}
     this.ros = options.ros;
     var topic = options.topic || '/map';
     var continuous = options.continuous;
@@ -460,7 +350,7 @@ NAV2D.OccupancyGridClientNav = function (options) {
     this.rootObject = options.rootObject || new createjs.Container();
     this.viewer = options.viewer;
     this.withOrientation = options.withOrientation || false;
-
+    
     this.navigator = null;
      // ��Ӧ�ƶ��˵��޸� ��ʼ
     // setup a client to get the map
@@ -471,14 +361,6 @@ NAV2D.OccupancyGridClientNav = function (options) {
         topic: topic
     });
 
-    // this.navigator = new NAV2D.Navigator({
-    //     ros: this.ros,
-    //     serverName: this.serverName,
-    //     actionName: this.actionName,
-    //     rootObject: this.rootObject,
-    //     withOrientation: this.withOrientation
-    // });
-
     client.on('change', function () {
         that.navigator = new NAV2D.Navigator({
             ros: that.ros,
@@ -487,7 +369,8 @@ NAV2D.OccupancyGridClientNav = function (options) {
             rootObject: that.rootObject,
             withOrientation: that.withOrientation
         });
-
+        
+        state.navigator = that.navigator
         // scale the viewer to fit the map
         that.viewer.scaleToDimensions(client.currentGrid.width, client.currentGrid.height);
         that.viewer.shift(client.currentGrid.pose.position.x, client.currentGrid.pose.position.y);
