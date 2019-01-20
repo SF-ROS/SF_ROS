@@ -2,41 +2,19 @@
 <html>
 <head>
 <meta charset="utf-8" />
-
-<!--<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>-->
+<link href="data:text/css;charset=utf-8," data-href="bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" rel="stylesheet" id="bs-theme-stylesheet">
+<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/sfstyle.css">
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/easeljs.min.js"></script>
 <script type="text/javascript" src="js/eventemitter2.min.js"></script>
 <script type="text/javascript" src="js/roslib.min.js"></script>
 <script type="text/javascript" src="js/ros2d.min.js"></script>
 <script type="text/javascript" src="js/nav2d.js"></script>
+<script type="text/javascript" src="js/vue2.5.22.min.js"></script>
+
 <script type="text/javascript">
-
-//控制任务过程中的状态
-var state = {
-  goal_list: [],
-  temp_pose_list: [],
-  is_naving: false, //正在导航
-  is_cancel: false, //
-  navigator: null, //导航器对象
-  goal_result_callback: function() {
-    this.is_naving = false;
-    this.is_arrow = false;
-    this.goal_list.shift();
-    if(!this.is_cancel) {
-      this.temp_pose_list.shift();
-    }
-    // if(goal_list.length>0){
-    //   goal = goal_list[0];
-    //   that.currentGoal = goal;
-    //   goal.send();
-    //   is_naving = true;
-    // }
-    if (this.goal_list.length == 0){
-      this.is_cancel = false;
-    }
-  }
-}
-
 function init() {
   // Connect to ROS.
   var ros = new ROSLIB.Ros({
@@ -58,75 +36,41 @@ function init() {
     serverName : '/move_base',
     withOrientation: true,
     continuous: true,
-    state: state
+    state: app
   });
-
-
-  var cancel_btn_current = document.getElementById("cancel_nav_current");
-  var cancel_btn_all = document.getElementById("cancel_nav_all");
-  var start_btn = document.getElementById("start");
-  var pause_btn = document.getElementById("pause");
-  var mark_btn = document.getElementById("mark");
-
-  //开始导航
-  start_btn.onclick = function() {
-    if (state.goal_list.length > 0) {
-      Start();
-    }
-  };
-
-  //取消当前目标和对应暂存点
-  cancel_btn_current.onclick = function() {
-    state.navigator.currentGoal.cancel();
-  };
-
-  //取消所有目标和暂存点
-  cancel_btn_all.onclick = function() {
-    if (state.goal_list.length > 0) {
-      CancelAll();
-    }
-    state.temp_pose_list = [];
-  };
-
-  //暂停
-  pause_btn.onclick = function () {
-    state.is_cancel = true;
-    CancelAll();
-    var len2 = state.temp_pose_list.length;
-    for (var j = 0; j < len2; j++){
-      state.navigator.sendGoal(state.temp_pose_list[j]);
-    }
-  };
-
-  function CancelAll() {
-    var len = state.goal_list.length;
-    for (var i = 0;i < len; i++){
-      goal = state.goal_list[i];
-      goal.send();
-      goal.cancel();
-    }
-  }
-
-  function Start() {
-    if(!state.is_naving){
-      goal = state.goal_list[0];
-      state.navigator.currentGoal = goal;
-      goal.send();
-      state.is_naving = true;
-    }
-    state.is_cancel = false;
-  }
 }
-
 </script>
-<!-- <script type="test/javascript" src="js/sfrobot.js"></script> -->
 </head>
 
 <body onload="init()">
   <div id="nav"></div>
-  <button id="cancel_nav_current">取消当前目标</button>
-  <button id="cancel_nav_all">取消所有目标</button>
-  <button id="start">开始</button>
-  <input type="button" id="pause" value="暂停">
+  <div id="app">
+    <button id="cancel_nav_current" class="btn btn-primary" v-on:click="cancel_current">取消当前目标</button>
+    <button id="cancel_nav_all" class="btn btn-primary" v-on:click="cancel_all">取消所有目标</button>
+    <button id="start" class="btn btn-primary" v-on:click="start">开始</button>
+    <button id="pause" class="btn btn-primary" v-on:click="pause">暂停</button> 
+    <button id="save" class="btn btn-primary" v-on:click="save">保存任务</button>
+
+    <hr>
+    <!-- <div class="position-table"> -->
+      <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>名称</th>
+              <th>坐标</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in temp_pose_list">
+              <th scope="row">{{index + 1}}</th>
+              <td>{{'名称' + (index + 1)}}</td>
+              <td>{{position_str.format(item.position.x.toFixed(3), item.position.y.toFixed(3), item.position.z.toFixed(3))}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+  <script type="text/javascript" src="js/sfrobot.js"></script>
 </body>
 </html>

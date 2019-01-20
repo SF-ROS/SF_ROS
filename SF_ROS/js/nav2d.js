@@ -107,7 +107,8 @@ NAV2D.Navigator = function(options) {
       }
     });
 
-    state.goal_list.push(goal);
+    //@fengjie 加入app的data中
+    app.goal_list.push(goal);
 
     // create a marker for the goal
     var goalMarker = new ROS2D.NavigationArrow({
@@ -125,8 +126,9 @@ NAV2D.Navigator = function(options) {
     that.rootObject.addChild(goalMarker);
     goal.on('result', function () {
       that.rootObject.removeChild(goalMarker);
-      if (state.goal_result_callback) {
-        state.goal_result_callback();
+      // @fengjie 如果有额外回调
+      if (app.goal_result_callback) {
+        app.goal_result_callback();
       }
     });
   }
@@ -314,7 +316,8 @@ NAV2D.Navigator = function(options) {
           orientation : orientation
         });
 
-        state.temp_pose_list.push(pose);
+        //加入app的data中
+        app.temp_pose_list.push(pose);
 
         // send the goal
         that.sendGoal(pose);
