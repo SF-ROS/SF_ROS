@@ -1,9 +1,5 @@
 # SF_ROS
 
-运行gazebo:" roslaunch mbot_gazebo mbot_laser_nav_gazebo.launch "
+2019.01.21 @fengjie：新增标记点存入文件功能
 
-运行rviz:" roslaunch mbot_navigation nav_cloister_demo.launch "
-
-运行rosbridge_server:" roslaunch rosbridge_server rosbridge_websocket.launch "
-
-运行robot_pose:" rosrun robot_pose_publisher robot_pose_publisher "
+2019.01.20 @fengjie：新增标记点自动生成列表显示 功能
