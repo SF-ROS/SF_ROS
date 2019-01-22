@@ -6,7 +6,7 @@ var app = new Vue({
     goal_list: [],
     temp_pose_list: [],
     is_naving: false, //正在导航
-    is_cancel: false, //是否暂停
+    is_cancel: false, // 是否取消
     navigator: null, //导航器对象
     showSucc: false,
     showFail: false,
@@ -36,6 +36,13 @@ var app = new Vue({
     pause: function () {
       this.is_cancel = true;
       this.cancelAllGoal();
+      this.createGoalsFromPoseList()
+    },
+
+    /**
+     * 根据temp_pose_list生成 goal_list，并显示在地图上
+     */
+    createGoalsFromPoseList: function() {
       var len2 = this.temp_pose_list.length;
       for (var j = 0; j < len2; j++) {
         this.navigator.sendGoal(this.temp_pose_list[j]);
@@ -69,9 +76,9 @@ var app = new Vue({
     },
 
     /**
-     * 保存所有标记点按钮
+     * 导出所有标记点按钮
      */
-    save: function() {
+    export: function() {
       post_list_json = JSON.stringify(this.temp_pose_list)
       try {
         this.saveAsFile(post_list_json, 'pose_list.data')
@@ -98,10 +105,36 @@ var app = new Vue({
     },
 
     /**
-     * 导出所有标记点按钮
+     * 弹出windows选择文件对话框
      */
-    export: function() {
+    load: function() {
+      // Check for the various File API support.
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        $('#input_pose_list').trigger('click');
+      } else {
+        alert('The File APIs are not fully supported in this browser.');
+      }
+    },
 
+    /**
+     * 选择文件后加载此文件
+     */
+    loadFile: function(opts) {
+      var that = this;
+      var files = opts.target.files;
+      if (files.length > 0) {
+        var file = files[0];
+        var reader = new FileReader();
+        reader.onload = (function (theFile) {
+          return function (e) {
+            that.temp_pose_list = JSON.parse(e.target.result)
+            that.cancelAllGoal()
+            that.createGoalsFromPoseList();
+          };
+        })(file);
+        reader.readAsText(file);
+      }
+      // alert(file);
     },
 
     /**

@@ -54,6 +54,8 @@ function init() {
         <button id="start" class="btn btn-primary" v-on:click="start">开始</button>
         <button id="pause" class="btn btn-primary" v-on:click="pause">暂停</button>
         <button id="save" class="btn btn-primary" v-on:click="test">导出标记点</button>
+        <button id="load" class="btn btn-primary" v-on:click="load">加载标记点</button>
+        <input id="input_pose_list" type="file" name="input_pose_list" style="display: none;" v-on:change="loadFile"/>
         <div class="alert alert-success alert-dismissible" role="alert" v-if="showSucc" v-on:click="showSucc=false">导出成功</div>
         <div class="alert alert-danger alert-dismissible" role="alert" v-if="showFail" v-on:click="showFail=false">导出失败</div>
       </div>
