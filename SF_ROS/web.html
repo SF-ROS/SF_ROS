@@ -12,6 +12,7 @@
 <script type="text/javascript" src="js/roslib.min.js"></script>
 <script type="text/javascript" src="js/ros2d.min.js"></script>
 <script type="text/javascript" src="js/nav2d.js"></script>
+<script type="text/javascript" src="js/FileSaver.min.js"></script>
 <script type="text/javascript" src="js/vue2.5.22.min.js"></script>
 
 <script type="text/javascript">
@@ -49,8 +50,9 @@ function init() {
     <button id="cancel_nav_all" class="btn btn-primary" v-on:click="cancel_all">取消所有目标</button>
     <button id="start" class="btn btn-primary" v-on:click="start">开始</button>
     <button id="pause" class="btn btn-primary" v-on:click="pause">暂停</button> 
-    <button id="save" class="btn btn-primary" v-on:click="save">保存任务</button>
-
+    <button id="save" class="btn btn-primary" v-on:click="save">导出标记点</button>
+    <div class="alert alert-success alert-dismissible" role="alert" v-if="showSucc" v-on:click="showSucc=false">导出成功</div>
+    <div class="alert alert-danger alert-dismissible" role="alert" v-if="showFail" v-on:click="showFail=false">导出失败</div>
     <hr>
     <!-- <div class="position-table"> -->
       <table class="table table-striped table-hover">
