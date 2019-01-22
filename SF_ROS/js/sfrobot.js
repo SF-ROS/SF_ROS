@@ -2,7 +2,6 @@ var app = new Vue({
   el: '#app',
   data: {
     message: 'Hello Vue!',
-    is_naving: false,
     goal_list: [],
     temp_pose_list: [],
     is_naving: false, //正在导航
@@ -46,7 +45,7 @@ var app = new Vue({
     },
 
     save: function() {
-
+      
     },
 
     CancelAll: function CancelAll() {
