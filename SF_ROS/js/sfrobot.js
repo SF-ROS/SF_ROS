@@ -55,6 +55,7 @@ var app = new Vue({
      * 取消当前目标按钮
      */
     cancel_current: function () {
+      this.is_cancel = false;
       if (typeof this.currentGoal !== 'undefined'){
         this.navigator.currentGoal.cancel();
       }
