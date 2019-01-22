@@ -1,4 +1,5 @@
 # SF_ROS
+2019.01.22 @jiangcongying: 修改取消当前目标的bug
 
 2019.01.21 @fengjie：新增标记点存入文件功能
 
