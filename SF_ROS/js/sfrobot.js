@@ -55,7 +55,15 @@ var app = new Vue({
      * 取消当前目标按钮
      */
     cancel_current: function () {
-      this.navigator.currentGoal.cancel();
+      if (typeof this.currentGoal !== 'undefined'){
+        this.navigator.currentGoal.cancel();
+      }
+      else if(this.goal_list.length>0){
+        goal = this.goal_list[0];
+        this.navigator.currentGoal = goal;
+        goal.send();
+        goal.cancel();
+      }
     },
 
     /**
