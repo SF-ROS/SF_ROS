@@ -1,3 +1,4 @@
+
 var app = new Vue({
   el: '#app',
   data: {
@@ -128,6 +129,10 @@ var app = new Vue({
       if (this.goal_list.length == 0){
         this.is_cancel = false;
       }
+    },
+
+    test:function () {
+      swal("hello world");
     }
   }
 })
@@ -146,3 +151,4 @@ String.prototype.format = function () {
     }
   });
 };　　
+
