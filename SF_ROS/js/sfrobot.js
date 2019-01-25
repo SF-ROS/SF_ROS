@@ -8,12 +8,30 @@ var app = new Vue({
     is_naving: false, //正在导航
     is_cancel: false, // 是否取消
     navigator: null, //导航器对象
-    showSucc: false,
-    showFail: false,
+    showExportSucc: false,
+    showExportFail: false,
+    showSaveSucc: false,
     position_str: "x: {0}, y: {1}, z: {2}",
   },
-  
+  mounted: function() {
+    this.init()
+  },
   methods: {
+
+    /**
+     * 初始化, 加载保存的标记点
+     */
+    init: function() {
+      this.temp_pose_list = JSON.parse(localStorage.pose_list)
+      that = this
+      setTimeout(function() {
+        if (!that.navigator) {
+          that.init()
+        } else {
+          that.createGoalsFromPoseList()
+        }
+      }, 50)
+    },
 
     /**
      * 开始导航按钮
@@ -78,14 +96,19 @@ var app = new Vue({
     /**
      * 导出所有标记点按钮
      */
-    export: function() {
-      post_list_json = JSON.stringify(this.temp_pose_list)
+    exportPoseList: function() {
+      pose_list_json = JSON.stringify(this.temp_pose_list)
       try {
-        this.saveAsFile(post_list_json, 'pose_list.data')
-        this.showSucc = true
+        this.saveAsFile(pose_list_json, 'pose_list.data')
+        this.showExportSucc = true
       } catch(e) {
-        this.showFail = true
+        this.showExportFail = true
       }
+    },
+    
+    save: function() {
+      localStorage.pose_list = JSON.stringify(this.temp_pose_list)
+      this.showSaveSucc = true
     },
 
     /**
@@ -107,7 +130,7 @@ var app = new Vue({
     /**
      * 弹出windows选择文件对话框
      */
-    load: function() {
+    loadPoseList: function() {
       // Check for the various File API support.
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         $('#input_pose_list').trigger('click');
@@ -184,4 +207,3 @@ String.prototype.format = function () {
     }
   });
 };　　
-

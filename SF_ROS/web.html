@@ -19,7 +19,7 @@
 function init() {
   // Connect to ROS.
   var ros = new ROSLIB.Ros({
-    url : 'ws://localhost:9090'
+    url : 'ws://192.168.236.129:9090'
   });
 
   // Create the main viewer.
@@ -53,11 +53,13 @@ function init() {
         <button id="cancel_nav_all" class="btn btn-primary" v-on:click="cancel_all">取消所有目标</button>
         <button id="start" class="btn btn-primary" v-on:click="start">开始</button>
         <button id="pause" class="btn btn-primary" v-on:click="pause">暂停</button>
-        <button id="save" class="btn btn-primary" v-on:click="test">导出标记点</button>
-        <button id="load" class="btn btn-primary" v-on:click="load">加载标记点</button>
+        <button id="save" class="btn btn-primary" v-on:click="save">保存</button>
+        <button id="export" class="btn btn-primary" v-on:click="exportPoseList">导出标记点</button>
+        <button id="load" class="btn btn-primary" v-on:click="loadPoseList">加载标记点</button>
         <input id="input_pose_list" type="file" name="input_pose_list" style="display: none;" v-on:change="loadFile"/>
-        <div class="alert alert-success alert-dismissible" role="alert" v-if="showSucc" v-on:click="showSucc=false">导出成功</div>
-        <div class="alert alert-danger alert-dismissible" role="alert" v-if="showFail" v-on:click="showFail=false">导出失败</div>
+        <div class="alert alert-success alert-dismissible" role="alert" v-if="showSaveSucc" v-on:click="showSaveSucc=false">保存成功</div>
+        <div class="alert alert-success alert-dismissible" role="alert" v-if="showExportSucc" v-on:click="showExportSucc=false">导出成功</div>
+        <div class="alert alert-danger alert-dismissible" role="alert" v-if="showExportFail" v-on:click="showExportFail=false">导出失败</div>
       </div>
       <div class="col-lg-3">
         <!-- <div class="position-table"> -->
