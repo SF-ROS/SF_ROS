@@ -1,12 +1,37 @@
+var Component = Vue.extend({
+  props: ['text'],
+  template: '<button class="btn btn-success">{{text}}</button>'
+})
+
+var Component2 = Vue.extend({
+  props: ['text'],
+  template: '<button class="btn btn-warning">{{text}}</button>'
+})
+
+var Component3 = Vue.extend({
+  props: ['text'],
+  template: '<button class="btn btn-info">{{text}}</button>'
+})
+
 
 var app = new Vue({
   el: '#app',
+  components:{
+    'component':Component,
+    'component2':Component2,
+    'component3':Component3
+  },
   data: {
+
+    items:[],//导航任务点的容器
+    currentTask:0, //当前导航任务点
     message: 'Hello Vue!',
     goal_list: [],
     temp_pose_list: [],
+    task_list: [], //导航任务列表
     is_naving: false, //正在导航
     is_cancel: false, // 是否取消
+    is_task:false,  //是否在执行任务导航
     navigator: null, //导航器对象
     showExportSucc: false,
     showExportFail: false,
@@ -63,8 +88,16 @@ var app = new Vue({
     createGoalsFromPoseList: function() {
       var len2 = this.temp_pose_list.length;
       for (var j = 0; j < len2; j++) {
-        this.navigator.sendGoal(this.temp_pose_list[j]);
+        this.navigator.sendGoal(this.temp_pose_list[j],j+1);
       }
+    },
+
+
+    /**
+     * 刷新按钮
+     */
+    refresh: function(){
+      location.reload();
     },
 
     /**
@@ -90,6 +123,23 @@ var app = new Vue({
         this.navigator.currentGoal = goal;
         goal.send();
         goal.cancel();
+      }
+    },
+
+
+    /**
+     * 取消最后目标按钮
+     */
+    cancel_last: function(){
+      if (this.goal_list.length>0){
+          goal = this.goal_list[this.goal_list.length-1];
+          this.navigator.cancelGoal = goal;
+          this.goal_list.unshift('1');
+          this.goal_list.pop();
+          this.temp_pose_list.unshift('1');
+          this.temp_pose_list.pop();
+          goal.send();
+          goal.cancel();
       }
     },
 
@@ -160,6 +210,7 @@ var app = new Vue({
       // alert(file);
     },
 
+
     /**
      * 取消所有标记点的具体逻辑
      */
@@ -179,17 +230,111 @@ var app = new Vue({
       this.is_naving = false;
       this.is_arrow = false;
       this.goal_list.shift();
-      if(!this.is_cancel) {
+
+      //到达目标点后变为蓝色
+      if (this.is_task){
+        var tt3 = this.items[this.currentTask].text;
+        this.items.splice(this.currentTask,1);
+        this.items.splice(this.currentTask,0,{
+          'component': 'component3',
+          'text':tt3 ,
+        });
+        this.currentTask++;
+      }
+
+      if(!this.is_cancel&&!this.is_task) {
         this.temp_pose_list.shift();
       }
       if (this.goal_list.length == 0){
         this.is_cancel = false;
       }
+      this.is_task = false;
     },
 
     test:function () {
       swal("hello world");
+    },
+
+    open_port:function () {
+
+    },
+
+
+    /**
+     * 删除标记点
+     * @param index
+     */
+    delete_pose:function (index) {
+      this.temp_pose_list.splice(index,1);
+      localStorage.pose_list = JSON.stringify(this.temp_pose_list);
+      location.reload();
+    },
+
+
+
+    /**
+     * 添加标记点到任务列表
+     */
+    add_task:function (component,index) {
+      this.task_list.push(this.goal_list[index]);
+      this.items.push({
+        'component': component,
+        'text':index+1 ,
+      })
+    },
+
+
+    /**
+     * 清空导航任务列表
+     */
+    taskClean:function(){
+      this.items = [];
+      this.task_list = [];
+    },
+
+
+
+    /**
+     * 开始导航任务
+     */
+    taskStart:function () {
+      if(this.task_list.length>0){
+        if (this.currentTask==this.task_list.length){
+          this.currentTask = 0;
+        }
+
+        //恢复前一个导航点的颜色为绿色
+        if(this.currentTask==0){
+          var tt = this.items[this.task_list.length-1].text;
+          this.items.splice(this.task_list.length-1,1);
+          this.items.splice(this.task_list.length-1,0,{
+            'component': 'component',
+            'text':tt ,
+          });
+        }else {
+          var tt1 = this.items[this.currentTask-1].text;
+          this.items.splice(this.currentTask-1,1);
+          this.items.splice(this.currentTask-1,0,{
+            'component': 'component',
+            'text':tt1 ,
+          });
+        }
+
+        //将当前目标点的颜色变为橙色
+        var tt2 = this.items[this.currentTask].text;
+        this.items.splice(this.currentTask,1);
+        this.items.splice(this.currentTask,0,{
+          'component': 'component2',
+          'text':tt2 ,
+        });
+
+
+        goal = this.task_list[this.currentTask];
+        this.is_task = true;
+        goal.send();
+      }
     }
+
   }
 })
 
@@ -207,3 +352,4 @@ String.prototype.format = function () {
     }
   });
 };　　
+

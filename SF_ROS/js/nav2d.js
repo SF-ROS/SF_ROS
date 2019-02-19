@@ -93,7 +93,48 @@ NAV2D.Navigator = function(options) {
    * @param pose - the goal pose
    * 
    */
-  this.sendGoal = function(pose) {
+  // this.sendGoal = function(pose) {
+  //   // create a goal
+  //   var goal = new ROSLIB.Goal({
+  //     actionClient : actionClient,
+  //     goalMessage : {
+  //       target_pose : {
+  //         header : {
+  //           frame_id : '/map'
+  //         },
+  //         pose : pose
+  //       }
+  //     }
+  //   });
+  //
+  //   //@fengjie 加入app的data中
+  //   app.goal_list.push(goal);
+  //
+  //   // create a marker for the goal
+  //   var goalMarker = new ROS2D.NavigationArrow({
+  //       size: 15,
+  //       strokeSize: 1,
+  //       fillColor: createjs.Graphics.getRGB(255, 64, 128, 0.66),
+  //       pulse: true
+  //   });
+  //   goalMarker.x = pose.position.x;
+  //   goalMarker.y = -pose.position.y;
+  //   goalMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.orientation);
+  //   goalMarker.scaleX = 1.0 / stage.scaleX;
+  //   goalMarker.scaleY = 1.0 / stage.scaleY;
+  //
+  //   that.rootObject.addChild(goalMarker);
+  //   goal.on('result', function () {
+  //     that.rootObject.removeChild(goalMarker);
+  //     // @fengjie 如果有额外回调
+  //     if (app.goal_result_callback) {
+  //       app.goal_result_callback();
+  //     }
+  //   });
+  // }
+
+
+  this.sendGoal = function(pose,i) {
     // create a goal
     var goal = new ROSLIB.Goal({
       actionClient : actionClient,
@@ -114,8 +155,8 @@ NAV2D.Navigator = function(options) {
     var goalMarker = new ROS2D.NavigationArrow({
         size: 15,
         strokeSize: 1,
-        fillColor: createjs.Graphics.getRGB(255, 64, 128, 0.66),
-        pulse: true
+        fillColor: createjs.Graphics.getRGB(0, 255, 0, 0.66),
+        pulse: false
     });
     goalMarker.x = pose.position.x;
     goalMarker.y = -pose.position.y;
@@ -123,15 +164,31 @@ NAV2D.Navigator = function(options) {
     goalMarker.scaleX = 1.0 / stage.scaleX;
     goalMarker.scaleY = 1.0 / stage.scaleY;
 
+    if (i==null){
+      i="";
+    }
+    var tt = new createjs.Text(i,"10px Arial","#000000");
+    tt.x = pose.position.x-0.1;
+    tt.y = -pose.position.y-0.1;
+    tt.scaleX = 1.0 / stage.scaleX;
+    tt.scaleY = 1.0 / stage.scaleY;
+
     that.rootObject.addChild(goalMarker);
+    that.rootObject.addChild(tt);
+
     goal.on('result', function () {
-      that.rootObject.removeChild(goalMarker);
+      if(!app.is_task){
+        that.rootObject.removeChild(goalMarker);
+        that.rootObject.removeChild(tt);
+      }
       // @fengjie 如果有额外回调
       if (app.goal_result_callback) {
         app.goal_result_callback();
       }
     });
   }
+
+
 
   /**
    * Cancel the currently active goal.
