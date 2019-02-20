@@ -19,7 +19,7 @@
 function init() {
   // Connect to ROS.
   var ros = new ROSLIB.Ros({
-    url : 'ws://192.168.1.102:9090'
+    url : 'ws://192.168.236.129.:9090'
   });
 
   // Create the main viewer.
@@ -51,9 +51,7 @@ function init() {
       <div class="col-lg-6">
         <div id="nav"></div>
         <button id="refresh" class="btn btn-primary" v-on:click="refresh">刷新</button>
-        <button id="cancel_nav_current" class="btn btn-primary" v-on:click="cancel_current">取消当前目标</button>
         <button id="cancel_nav_last" class="btn btn-primary" v-on:click="cancel_last">取消最后目标</button>
-        <button id="cancel_nav_all" class="btn btn-primary" v-on:click="cancel_all">取消所有目标</button>
         <button id="start" class="btn btn-primary" v-on:click="start">开始</button>
         <button id="pause" class="btn btn-primary" v-on:click="pause">暂停</button>
         <button id="save" class="btn btn-primary" v-on:click="save">保存</button>
@@ -97,7 +95,7 @@ function init() {
           <td>
             <button id="taskClean" class="btn btn-primary" v-on:click="taskClean">清空</button>
             <button id="taskStart" class="btn btn-primary" v-on:click="taskStart">开始</button>
-            <button id="taskPause" class="btn btn-primary">暂停</button>
+            <button id="taskPause" class="btn btn-primary" v-on:click="taskPause">暂停</button>
           </td>
         </div>
       </div>

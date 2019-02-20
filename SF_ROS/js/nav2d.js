@@ -133,8 +133,7 @@ NAV2D.Navigator = function(options) {
   //   });
   // }
 
-
-  this.sendGoal = function(pose,i) {
+  this.createGoal = function(pose, callback) {
     // create a goal
     var goal = new ROSLIB.Goal({
       actionClient : actionClient,
@@ -147,9 +146,11 @@ NAV2D.Navigator = function(options) {
         }
       }
     });
+    goal.on('result', callback);
+    return goal
+  }
 
-    //@fengjie 加入app的data中
-    app.goal_list.push(goal);
+  this.showPose = function(pose, i) {
 
     // create a marker for the goal
     var goalMarker = new ROS2D.NavigationArrow({
@@ -164,7 +165,7 @@ NAV2D.Navigator = function(options) {
     goalMarker.scaleX = 1.0 / stage.scaleX;
     goalMarker.scaleY = 1.0 / stage.scaleY;
 
-    if (i==null){
+    if (i == null){
       i="";
     }
     var tt = new createjs.Text(i,"10px Arial","#000000");
@@ -175,19 +176,7 @@ NAV2D.Navigator = function(options) {
 
     that.rootObject.addChild(goalMarker);
     that.rootObject.addChild(tt);
-
-    goal.on('result', function () {
-      if(!app.is_task){
-        that.rootObject.removeChild(goalMarker);
-        that.rootObject.removeChild(tt);
-      }
-      // @fengjie 如果有额外回调
-      if (app.goal_result_callback) {
-        app.goal_result_callback();
-      }
-    });
   }
-
 
 
   /**
@@ -269,8 +258,8 @@ NAV2D.Navigator = function(options) {
       var pose = new ROSLIB.Pose({
         position : new ROSLIB.Vector3(coords)
       });
-      // send the goal
-      that.sendGoal(pose);
+
+      that.showPose(pose);
     });
   } else { // withOrientation === true
     // setup a click-and-point listener (with orientation)
@@ -377,7 +366,7 @@ NAV2D.Navigator = function(options) {
         app.temp_pose_list.push(pose);
 
         // send the goal
-        that.sendGoal(pose);
+        that.showPose(pose);
       }
     };
 

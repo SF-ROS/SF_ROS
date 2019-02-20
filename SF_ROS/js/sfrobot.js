@@ -22,11 +22,9 @@ var app = new Vue({
     'component3':Component3
   },
   data: {
-
     items:[],//导航任务点的容器
     currentTask:0, //当前导航任务点
     message: 'Hello Vue!',
-    goal_list: [],
     temp_pose_list: [],
     task_list: [], //导航任务列表
     is_naving: false, //正在导航
@@ -59,36 +57,12 @@ var app = new Vue({
     },
 
     /**
-     * 开始导航按钮
-     */
-    start: function () {
-      if (this.goal_list.length > 0) {
-        if(!this.is_naving){
-          goal = this.goal_list[0];
-          this.navigator.currentGoal = goal;
-          goal.send();
-          this.is_naving = true;
-        }
-        this.is_cancel = false;
-      }
-    },
-
-    /**
-     * 暂停按钮
-     */
-    pause: function () {
-      this.is_cancel = true;
-      this.cancelAllGoal();
-      this.createGoalsFromPoseList()
-    },
-
-    /**
      * 根据temp_pose_list生成 goal_list，并显示在地图上
      */
     createGoalsFromPoseList: function() {
       var len2 = this.temp_pose_list.length;
       for (var j = 0; j < len2; j++) {
-        this.navigator.sendGoal(this.temp_pose_list[j],j+1);
+        this.navigator.showPose(this.temp_pose_list[j], j+1);
       }
     },
 
@@ -99,33 +73,6 @@ var app = new Vue({
     refresh: function(){
       location.reload();
     },
-
-    /**
-     * 取消所有目标按钮
-     */
-    cancel_all: function () {
-      if (this.goal_list.length > 0) {
-        this.cancelAllGoal();
-      }
-      this.temp_pose_list = [];
-    },
-
-    /**
-     * 取消当前目标按钮
-     */
-    cancel_current: function () {
-      this.is_cancel = false;
-      if (typeof this.currentGoal !== 'undefined'){
-        this.navigator.currentGoal.cancel();
-      }
-      else if(this.goal_list.length>0){
-        goal = this.goal_list[0];
-        this.navigator.currentGoal = goal;
-        goal.send();
-        goal.cancel();
-      }
-    },
-
 
     /**
      * 取消最后目标按钮
@@ -256,7 +203,9 @@ var app = new Vue({
     },
 
     open_port:function () {
-
+      this.is_cancel = true;
+      this.cancelAllGoal();
+      this.createGoalsFromPoseList()
     },
 
 
@@ -270,16 +219,15 @@ var app = new Vue({
       location.reload();
     },
 
-
-
+    
     /**
      * 添加标记点到任务列表
      */
     add_task:function (component,index) {
-      this.task_list.push(this.goal_list[index]);
+      this.task_list.push(index);
       this.items.push({
         'component': component,
-        'text':index+1 ,
+        'text':index + 1 ,
       })
     },
 
@@ -292,19 +240,23 @@ var app = new Vue({
       this.task_list = [];
     },
 
-
+    taskPause: function() {
+      this.task_list[this.currentTask].cancel()
+      //TODO :createGoal
+      //TODO: goal.send
+    },
 
     /**
      * 开始导航任务
      */
     taskStart:function () {
-      if(this.task_list.length>0){
-        if (this.currentTask==this.task_list.length){
+      if(this.task_list.length > 0){
+        if (this.currentTask == this.task_list.length){
           this.currentTask = 0;
         }
 
         //恢复前一个导航点的颜色为绿色
-        if(this.currentTask==0){
+        if(this.currentTask == 0){
           var tt = this.items[this.task_list.length-1].text;
           this.items.splice(this.task_list.length-1,1);
           this.items.splice(this.task_list.length-1,0,{
@@ -328,9 +280,14 @@ var app = new Vue({
           'text':tt2 ,
         });
 
-
-        goal = this.task_list[this.currentTask];
+        that = this
+        poseIndex = this.task_list[this.currentTask];
         this.is_task = true;
+        pose = this.temp_pose_list[poseIndex]
+        goal = this.navigator.createGoal(pose, function() {
+          that.currentTask += 1
+          console.log('goal completed!')
+        })
         goal.send();
       }
     }
