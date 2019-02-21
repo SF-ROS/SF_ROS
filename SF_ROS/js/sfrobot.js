@@ -25,11 +25,10 @@ var app = new Vue({
     items:[],//导航任务点的容器
     currentTask:0, //当前导航任务点
     message: 'Hello Vue!',
-    temp_pose_list: [],
+    temp_pose_list: [], //标记点列表
     task_list: [], //导航任务列表
-    is_naving: false, //正在导航
-    is_cancel: false, // 是否取消
     is_task:false,  //是否在执行任务导航
+    is_pause:false,  //是否暂停了
     navigator: null, //导航器对象
     showExportSucc: false,
     showExportFail: false,
@@ -75,22 +74,6 @@ var app = new Vue({
     },
 
     /**
-     * 取消最后目标按钮
-     */
-    cancel_last: function(){
-      if (this.goal_list.length>0){
-          goal = this.goal_list[this.goal_list.length-1];
-          this.navigator.cancelGoal = goal;
-          this.goal_list.unshift('1');
-          this.goal_list.pop();
-          this.temp_pose_list.unshift('1');
-          this.temp_pose_list.pop();
-          goal.send();
-          goal.cancel();
-      }
-    },
-
-    /**
      * 导出所有标记点按钮
      */
     exportPoseList: function() {
@@ -105,7 +88,7 @@ var app = new Vue({
     
     save: function() {
       localStorage.pose_list = JSON.stringify(this.temp_pose_list)
-      this.showSaveSucc = true
+      location.reload()
     },
 
     /**
@@ -148,64 +131,21 @@ var app = new Vue({
         reader.onload = (function (theFile) {
           return function (e) {
             that.temp_pose_list = JSON.parse(e.target.result)
-            that.cancelAllGoal()
-            that.createGoalsFromPoseList();
+            localStorage.pose_list = JSON.stringify(that.temp_pose_list)
           };
         })(file);
         reader.readAsText(file);
+        location.reload()
       }
-      // alert(file);
     },
+
 
 
     /**
-     * 取消所有标记点的具体逻辑
+     * 打开串口
      */
-    cancelAllGoal: function () {
-      var len = this.goal_list.length;
-      for (var i = 0;i < len; i++){
-        goal = this.goal_list[i];
-        goal.send();
-        goal.cancel();
-      }
-    },
-
-    /**
-     * 标记点完成或者取消时，额外的回调函数
-     */
-    goal_result_callback: function() {
-      this.is_naving = false;
-      this.is_arrow = false;
-      this.goal_list.shift();
-
-      //到达目标点后变为蓝色
-      if (this.is_task){
-        var tt3 = this.items[this.currentTask].text;
-        this.items.splice(this.currentTask,1);
-        this.items.splice(this.currentTask,0,{
-          'component': 'component3',
-          'text':tt3 ,
-        });
-        this.currentTask++;
-      }
-
-      if(!this.is_cancel&&!this.is_task) {
-        this.temp_pose_list.shift();
-      }
-      if (this.goal_list.length == 0){
-        this.is_cancel = false;
-      }
-      this.is_task = false;
-    },
-
-    test:function () {
-      swal("hello world");
-    },
-
     open_port:function () {
-      this.is_cancel = true;
-      this.cancelAllGoal();
-      this.createGoalsFromPoseList()
+
     },
 
 
@@ -215,10 +155,16 @@ var app = new Vue({
      */
     delete_pose:function (index) {
       this.temp_pose_list.splice(index,1);
-      localStorage.pose_list = JSON.stringify(this.temp_pose_list);
-      location.reload();
+      this.save();
     },
 
+    /**
+     * 删除所有标记点
+     */
+    delete_allPose:function(){
+      this.temp_pose_list = [];
+      this.save();
+    },
     
     /**
      * 添加标记点到任务列表
@@ -240,17 +186,20 @@ var app = new Vue({
       this.task_list = [];
     },
 
+    /**
+     * 暂停当前任务
+     */
     taskPause: function() {
-      this.task_list[this.currentTask].cancel()
-      //TODO :createGoal
-      //TODO: goal.send
+      this.is_pause = true;
+      console.log('goal paused!');
+      goal.cancel();
     },
 
     /**
      * 开始导航任务
      */
     taskStart:function () {
-      if(this.task_list.length > 0){
+      if(this.task_list.length > 0 && !this.is_task){
         if (this.currentTask == this.task_list.length){
           this.currentTask = 0;
         }
@@ -284,13 +233,35 @@ var app = new Vue({
         poseIndex = this.task_list[this.currentTask];
         this.is_task = true;
         pose = this.temp_pose_list[poseIndex]
-        goal = this.navigator.createGoal(pose, function() {
-          that.currentTask += 1
-          console.log('goal completed!')
-        })
+        goal = this.navigator.createGoal(pose, this.goal_result_callback)
         goal.send();
+        console.log('goal start!')
       }
-    }
+    },
+
+
+
+    /**
+     * 标记点完成或者取消时，额外的回调函数
+     */
+    goal_result_callback: function() {
+
+      //到达目标点后变为蓝色
+      if (this.is_task&&!this.is_pause){
+        var tt3 = this.items[this.currentTask].text;
+        this.items.splice(this.currentTask,1);
+        this.items.splice(this.currentTask,0,{
+          'component': 'component3',
+          'text':tt3 ,
+        });
+
+        this.currentTask++;
+        console.log('goal completed!')
+      }
+
+      this.is_task = false;
+      this.is_pause = false;
+    },
 
   }
 })
