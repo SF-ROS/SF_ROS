@@ -363,7 +363,7 @@ NAV2D.Navigator = function(options) {
         });
 
         //加入app的data中
-        app.temp_pose_list.push(pose);
+        app.temp_pose_list.push(['',pose]);
 
         // send the goal
         that.showPose(pose);

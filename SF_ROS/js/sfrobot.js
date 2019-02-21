@@ -26,6 +26,8 @@ var app = new Vue({
     currentTask:0, //当前导航任务点
     message: 'Hello Vue!',
     temp_pose_list: [], //标记点列表
+    pose_name_list:["11","22","33","44","55"],  //标记点名称列表
+    pose_list:[],
     task_list: [], //导航任务列表
     is_task:false,  //是否在执行任务导航
     is_pause:false,  //是否暂停了
@@ -61,7 +63,7 @@ var app = new Vue({
     createGoalsFromPoseList: function() {
       var len2 = this.temp_pose_list.length;
       for (var j = 0; j < len2; j++) {
-        this.navigator.showPose(this.temp_pose_list[j], j+1);
+        this.navigator.showPose(this.temp_pose_list[j][1], j+1);
       }
     },
 
@@ -154,16 +156,24 @@ var app = new Vue({
      * @param index
      */
     delete_pose:function (index) {
-      this.temp_pose_list.splice(index,1);
-      this.save();
+      if (confirm("你确定删除该标记点吗？")) {
+        this.temp_pose_list.splice(index,1);
+        this.save();
+      }
+      else {
+      }
     },
 
     /**
      * 删除所有标记点
      */
     delete_allPose:function(){
-      this.temp_pose_list = [];
-      this.save();
+      if (confirm("你确定删除所有标记点吗？")) {
+        this.temp_pose_list = [];
+        this.save();
+      }
+      else {
+      }
     },
     
     /**
@@ -177,6 +187,18 @@ var app = new Vue({
       })
     },
 
+    /**
+     * 修改pose名称
+     * @param index
+     */
+    edit_posename:function(index){
+      var name = prompt("请输入该标记点的名称",this.temp_pose_list[index][0])
+      if (name){
+        this.temp_pose_list[index][0] = name;
+        this.save();
+      }
+    },
+
 
     /**
      * 清空导航任务列表
@@ -187,12 +209,27 @@ var app = new Vue({
     },
 
     /**
-     * 暂停当前任务
+     * 暂停当前导航任务
      */
     taskPause: function() {
       this.is_pause = true;
       console.log('goal paused!');
       goal.cancel();
+    },
+
+    /**
+     * 改变导航任务方块的颜色
+     * @param index  方块的索引
+     * @param component 方块的组件
+     */
+    changeColor:function(index,component){
+      that = this;
+      var tt = that.items[index].text;
+      that.items.splice(index,1);
+      that.items.splice(index,0,{
+        'component': component,
+        'text':tt ,
+      });
     },
 
     /**
@@ -206,34 +243,20 @@ var app = new Vue({
 
         //恢复前一个导航点的颜色为绿色
         if(this.currentTask == 0){
-          var tt = this.items[this.task_list.length-1].text;
-          this.items.splice(this.task_list.length-1,1);
-          this.items.splice(this.task_list.length-1,0,{
-            'component': 'component',
-            'text':tt ,
-          });
+          this.changeColor(this.task_list.length-1,'component')
         }else {
-          var tt1 = this.items[this.currentTask-1].text;
-          this.items.splice(this.currentTask-1,1);
-          this.items.splice(this.currentTask-1,0,{
-            'component': 'component',
-            'text':tt1 ,
-          });
+          this.changeColor(this.currentTask-1,'component')
         }
 
         //将当前目标点的颜色变为橙色
-        var tt2 = this.items[this.currentTask].text;
-        this.items.splice(this.currentTask,1);
-        this.items.splice(this.currentTask,0,{
-          'component': 'component2',
-          'text':tt2 ,
-        });
+        this.changeColor(this.currentTask,'component2')
 
         that = this
         poseIndex = this.task_list[this.currentTask];
-        this.is_task = true;
-        pose = this.temp_pose_list[poseIndex]
+        pose = this.temp_pose_list[poseIndex][1]
         goal = this.navigator.createGoal(pose, this.goal_result_callback)
+
+        this.is_task = true;
         goal.send();
         console.log('goal start!')
       }
@@ -245,15 +268,9 @@ var app = new Vue({
      * 标记点完成或者取消时，额外的回调函数
      */
     goal_result_callback: function() {
-
-      //到达目标点后变为蓝色
       if (this.is_task&&!this.is_pause){
-        var tt3 = this.items[this.currentTask].text;
-        this.items.splice(this.currentTask,1);
-        this.items.splice(this.currentTask,0,{
-          'component': 'component3',
-          'text':tt3 ,
-        });
+        //到达目标点后变为蓝色
+        this.changeColor(this.currentTask,'component3');
 
         this.currentTask++;
         console.log('goal completed!')
