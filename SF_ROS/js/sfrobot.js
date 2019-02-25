@@ -223,7 +223,7 @@ var app = new Vue({
      */
     mergeStop:function(){
       pose = {"position":{"x":1,"y":1,"z":0},"orientation":{"x":0,"y":0,"z":1,"w":1}}
-      goal = this.navigator.createGoal(pose,this.stopFinished)
+      goal = this.navigator.createGoal(pose, this.stopFinished)
       goal.send()
       goal.cancel()
     },
@@ -273,7 +273,10 @@ var app = new Vue({
 
         this.is_task = true;
         goal.send();
-        console.log('goal start!'+goal.toString())
+        console.log('goal start!'+ goal.toString())
+
+        //把所有点发送过去
+        this.navigator.sendMessage(this.temp_pose_list)
       }
     },
 

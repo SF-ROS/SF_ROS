@@ -87,66 +87,27 @@ NAV2D.Navigator = function(options) {
     serverName : serverName
   });
 
-
-  var testTopic = new ROSLIB.Topic({
+  var sendGoalTopic = new ROSLIB.Topic({
     ros : ros,
-    name : '/test',
+    name : '/sendGoal',
     messageType : 'std_msgs/String'
   });
 
-  var str_test = new ROSLIB.Message({
-    data : '[["充电座",{"position":{"x":5.231466974099478,"y":-1.2799998372793189,"z":0},"orientation":{"x":0,"y":0,"z":-0.7071067811865476,"w":-0.7071067811865475}}],["A点",{"position":{"x":5.19093364016215,"y":-5.869999905675649,"z":0},"orientation":{"x":0,"y":0,"z":1,"w":6.123233995736766e-17}}],["B点",{"position":{"x":-1.334933123747508,"y":-4.249999881535768,"z":0},"orientation":{"x":0,"y":0,"z":0.6746440239596776,"w":-0.7381432387656842}}],["C点",{"position":{"x":-5.469333185354869,"y":-3.979999877512454,"z":0},"orientation":{"x":0,"y":0,"z":0.023110577870259746,"w":-0.9997329149280335}}],["仓库",{"position":{"x":-2.3887998061180116,"y":0.6700001917779456,"z":0},"orientation":{"x":0,"y":0,"z":0.9275250069239857,"w":-0.373761102217259}}]]'
-  });
-
-  this.test = function () {
-    testTopic.publish(str_test);
+  this.sendMessage = function(dataObj) {
+    var msg = new ROSLIB.Message({
+      data: JSON.stringify(dataObj)
+    })
+    console.log(JSON.stringify(dataObj))
+    sendGoalTopic.publish(msg)
   }
 
   /**
    * Send a goal to the navigation stack with the given pose.
    *
    * @param pose - the goal pose
+   * @param callback - the callback function
    * 
    */
-  // this.sendGoal = function(pose) {
-  //   // create a goal
-  //   var goal = new ROSLIB.Goal({
-  //     actionClient : actionClient,
-  //     goalMessage : {
-  //       target_pose : {
-  //         header : {
-  //           frame_id : '/map'
-  //         },
-  //         pose : pose
-  //       }
-  //     }
-  //   });
-  //
-  //   //@fengjie 加入app的data中
-  //   app.goal_list.push(goal);
-  //
-  //   // create a marker for the goal
-  //   var goalMarker = new ROS2D.NavigationArrow({
-  //       size: 15,
-  //       strokeSize: 1,
-  //       fillColor: createjs.Graphics.getRGB(255, 64, 128, 0.66),
-  //       pulse: true
-  //   });
-  //   goalMarker.x = pose.position.x;
-  //   goalMarker.y = -pose.position.y;
-  //   goalMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.orientation);
-  //   goalMarker.scaleX = 1.0 / stage.scaleX;
-  //   goalMarker.scaleY = 1.0 / stage.scaleY;
-  //
-  //   that.rootObject.addChild(goalMarker);
-  //   goal.on('result', function () {
-  //     that.rootObject.removeChild(goalMarker);
-  //     // @fengjie 如果有额外回调
-  //     if (app.goal_result_callback) {
-  //       app.goal_result_callback();
-  //     }
-  //   });
-  // }
 
   this.createGoal = function(pose, callback) {
     // create a goal
