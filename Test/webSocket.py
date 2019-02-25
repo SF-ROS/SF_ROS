@@ -6,6 +6,10 @@ import hashlib
 import threading
 import struct
 
+
+
+import serialTest
+
 def get_headers(data):
     """
     将请求头格式化成字典
@@ -13,7 +17,7 @@ def get_headers(data):
     :return:
     """
     header_dict = {}
-    data = str(data, encoding='utf-8')
+    data = str(data)
 
     header, body = data.split('\r\n\r\n', 1)
     header_list = header.split('\r\n')
@@ -27,29 +31,26 @@ def get_headers(data):
     return header_dict
 
 
-def send_msg(conn, msg_bytes):
-    """
-    WebSocket服务端向客户端发送消息
-    :param conn: 客户端连接到服务器端的socket对象,即： conn,address = socket.accept()
-    :param msg_bytes: 向客户端发送的字节
-    :return:
-    """
-
-    token = b"\x81"
-    length = len(msg_bytes)
+def send_msg(conn, data):
+    if data:
+        data = str(data)
+    else:
+        return False
+    token = "\x81"
+    length = len(data)
     if length < 126:
-        token += struct.pack("B", length)
+        token += struct.pack("B", length)    # struct为Python中处理二进制数的模块，二进制流为C，或网络流的形式。
     elif length <= 0xFFFF:
         token += struct.pack("!BH", 126, length)
     else:
         token += struct.pack("!BQ", 127, length)
-
-    msg = token + msg_bytes
-    conn.send(msg)
+    data = '%s%s' % (token, data)
+    conn.send(data)
     return True
 
 
 def handshake(conn):
+
     data = conn.recv(1024)
     headers = get_headers(data)
     response_tpl = "HTTP/1.1 101 Switching Protocols\r\n" \
@@ -57,11 +58,10 @@ def handshake(conn):
                    "Connection:Upgrade\r\n" \
                    "Sec-WebSocket-Accept:%s\r\n" \
                    "WebSocket-Location:ws://%s%s\r\n\r\n"
-
     value = headers['Sec-WebSocket-Key'] + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
     ac = base64.b64encode(hashlib.sha1(value.encode('utf-8')).digest())
     response_str = response_tpl % (ac.decode('utf-8'), headers['Host'], headers['url'])
-    conn.send(bytes(response_str, encoding='utf-8'))
+    conn.send(response_str)
 
 
 def dojob(conn):
@@ -70,35 +70,51 @@ def dojob(conn):
 
     while True:
         try:
-            info = conn.recv(8096)
+            info = conn.recv(2048)
         except Exception as e:
             info = None
 
         if not info:
             break
-
-        payload_len = info[1] & 127
-        if payload_len == 126:
-            extend_payload_len = info[2:4]
-            mask = info[4:8]
-            decoded = info[8:]
-        elif payload_len == 127:
-            extend_payload_len = info[2:10]
-            mask = info[10:14]
-            decoded = info[14:]
+        
+        code_len = ord(info[1]) & 127
+        if code_len == 126:
+            masks = info[4:8]
+            data = info[8:]
+        elif code_len == 127:
+            masks = info[10:14]
+            data = info[14:]
         else:
-            extend_payload_len = None
-            mask = info[2:6]
-            decoded = info[6:]
+            masks = info[2:6]
+            data = info[6:]
+        raw_str = ""
+        i = 0
+        for d in data:
+            raw_str += chr(ord(d) ^ ord(masks[i % 4]))
+            i += 1
 
-        bytes_list = bytearray()
-        for i in range(len(decoded)):
-            chunk = decoded[i] ^ mask[i % 4]
-            bytes_list.append(chunk)
-        body = str(bytes_list, encoding='utf-8')
-        print(body)
-
-        send_msg(conn, body.encode('utf-8'))
+        print raw_str
+        send_msg(conn,raw_str)
+        # payload_len = ord(info[1]) & 127
+        # if payload_len == 126:
+        #     extend_payload_len = info[2:4]
+        #     mask = info[4:8]
+        #     decoded = info[8:]
+        # elif payload_len == 127:
+        #     extend_payload_len = info[2:10]
+        #     mask = info[10:14]
+        #     decoded = info[14:]
+        # else:
+        #     extend_payload_len = None
+        #     mask = info[2:6]
+        #     decoded = info[6:]
+            
+        # bytes_list = bytearray()
+        # for i in range(len(decoded)):
+        #     chunk = decoded[i] ^ mask[i % 4]
+        #     bytes_list.append(chunk)
+        # body = str(bytes_list)
+        # print(body)
 
     return False
 

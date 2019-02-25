@@ -15,7 +15,7 @@
  
 <script type="text/javascript">
     window.onbeforeunload = onbeforeunload_handler;  
-    var socket = new WebSocket("ws://127.0.0.1:8003/chatsocket");
+    var socket = new WebSocket("ws://127.0.0.1:8003/");
 
     function onbeforeunload_handler(){     
        socket.close();      

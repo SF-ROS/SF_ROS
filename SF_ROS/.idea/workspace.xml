@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="247d02f6-1d5d-4441-8198-32813c24d18d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sfrobot.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sfrobot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web.html" beforeDir="false" afterPath="$PROJECT_DIR$/web.html" afterDir="false" />
-    </list>
+    <list default="true" id="247d02f6-1d5d-4441-8198-32813c24d18d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,19 +32,19 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/sfrobot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2584">
+            <state relative-caret-position="100">
               <caret line="152" column="21" selection-start-line="152" selection-start-column="21" selection-end-line="152" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Serial/webSocket.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
+            <state relative-caret-position="542">
               <caret line="120" column="46" selection-start-line="120" selection-start-column="46" selection-end-line="120" selection-end-column="46" />
               <folding>
                 <element signature="e#45#58#0" expanded="true" />
@@ -63,6 +58,17 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
               <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/vue2.5.22.min.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -243,23 +249,22 @@
       <workItem from="1550799423100" duration="9866000" />
       <workItem from="1551058326326" duration="10880000" />
       <workItem from="1551077442777" duration="22000" />
-      <workItem from="1551079257069" duration="291000" />
+      <workItem from="1551079257069" duration="554000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56879000" />
+    <option name="totallyTimeSpent" value="57142000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="538" y="24" width="1315" height="1033" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18705603" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18705603" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23093922" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.23093922" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -344,13 +349,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/sfrobot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2584">
-          <caret line="152" column="21" selection-start-line="152" selection-start-column="21" selection-end-line="152" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/mjpegcanvas.min.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -374,6 +372,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Serial/webSocket.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="542">
+          <caret line="120" column="46" selection-start-line="120" selection-start-column="46" selection-end-line="120" selection-end-column="46" />
+          <folding>
+            <element signature="e#45#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/Serial/serialTest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -381,13 +389,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Serial/webSocket.py">
+    <entry file="file://$PROJECT_DIR$/js/vue2.5.22.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="120" column="46" selection-start-line="120" selection-start-column="46" selection-end-line="120" selection-end-column="46" />
+        <state>
           <folding>
-            <element signature="e#45#58#0" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/sfrobot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="152" column="21" selection-start-line="152" selection-start-column="21" selection-end-line="152" selection-end-column="21" />
         </state>
       </provider>
     </entry>
