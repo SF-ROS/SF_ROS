@@ -143,15 +143,12 @@ var app = new Vue({
 
 
 
+
     /**
      * 打开串口
      */
     open_port:function () {
-      ws = new WebSocket("ws://127.0.0.1:9000")
-      ws.onopen = function (ev) {
-        console.log('test')
-        ws.send('1111')
-      }
+      this.navigator.test()
     },
 
 
