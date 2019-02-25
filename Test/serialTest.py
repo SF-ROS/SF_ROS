@@ -6,6 +6,7 @@ import time
 import roslib
 import rospy
 import actionlib
+from std_msgs.msg import String
 from actionlib_msgs.msg import *
 from geometry_msgs.msg import Pose, PoseWithCovarianceStamped, Point, Quaternion, Twist
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -13,11 +14,17 @@ from random import sample
 from math import pow, sqrt
 
 
+
+def callback(data):
+    print(data.data)
+
 class NavTest():
+
     def __init__(self):
         ser = serial.Serial("/dev/ttyUSB0", 9600, timeout=0.5)
         rospy.init_node('exploring_slam', anonymous=True)
         rospy.on_shutdown(self.shutdown)
+        rospy.Subscriber("/test", String, callback)
 
         # 在每个目标位置暂停的时间 (单位：s)
         self.rest_time = rospy.get_param("~rest_time", 2)
@@ -117,6 +124,7 @@ class NavTest():
             i += 1
             n_goals += 1
 
+            #等待接收到串口发出的'1'后继续
             test = True
             if not ser.isOpen():
                 ser.open()
