@@ -147,7 +147,11 @@ var app = new Vue({
      * 打开串口
      */
     open_port:function () {
-
+      ws = new WebSocket("ws://127.0.0.1:9000")
+      ws.onopen = function (ev) {
+        console.log('test')
+        ws.send('1111')
+      }
     },
 
 
@@ -218,6 +222,20 @@ var app = new Vue({
     },
 
     /**
+     * 急停
+     */
+    mergeStop:function(){
+      pose = {"position":{"x":1,"y":1,"z":0},"orientation":{"x":0,"y":0,"z":1,"w":1}}
+      goal = this.navigator.createGoal(pose,this.stopFinished)
+      goal.send()
+      goal.cancel()
+    },
+    stopFinished:function(){
+      console.log("急停完成")
+    },
+
+
+    /**
      * 改变导航任务方块的颜色
      * @param index  方块的索引
      * @param component 方块的组件
@@ -258,7 +276,7 @@ var app = new Vue({
 
         this.is_task = true;
         goal.send();
-        console.log('goal start!')
+        console.log('goal start!'+goal.toString())
       }
     },
 
