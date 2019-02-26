@@ -54,7 +54,7 @@ var app = new Vue({
         } else {
           that.createGoalsFromPoseList()
           //把所有标记点发送到机器人端
-          that.navigator.sendMessage(that.temp_pose_list)
+          that.navigator.sendPose(that.temp_pose_list)
         }
       }, 50)
     },
@@ -93,7 +93,7 @@ var app = new Vue({
     save: function() {
       localStorage.pose_list = JSON.stringify(this.temp_pose_list)
       //把所有标记点发送到机器人端
-      this.navigator.sendMessage(this.temp_pose_list)
+      this.navigator.sendPose(this.temp_pose_list)
       location.reload()
     },
 
@@ -138,7 +138,7 @@ var app = new Vue({
           return function (e) {
             that.temp_pose_list = JSON.parse(e.target.result)
             //把所有标记点发送到机器人端
-            that.navigator.sendMessage(that.temp_pose_list)
+            that.navigator.sendPose(that.temp_pose_list)
             localStorage.pose_list = JSON.stringify(that.temp_pose_list)
           };
         })(file);
