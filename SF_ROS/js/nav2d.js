@@ -87,9 +87,9 @@ NAV2D.Navigator = function(options) {
     serverName : serverName
   });
 
-  var sendGoalTopic = new ROSLIB.Topic({
+  var sendPoseTopic = new ROSLIB.Topic({
     ros : ros,
-    name : '/sendGoal',
+    name : '/sendPose',
     messageType : 'std_msgs/String'
   });
 
@@ -98,8 +98,23 @@ NAV2D.Navigator = function(options) {
       data: JSON.stringify(dataObj)
     })
     console.log(JSON.stringify(dataObj))
-    sendGoalTopic.publish(msg)
-  }
+    sendPoseTopic.publish(msg)
+  };
+
+  var sendTaskTopic = new ROSLIB.Topic({
+    ros : ros,
+    name : '/sendTask',
+    messageType : 'std_msgs/String'
+  });
+  
+  this.sendTask = function (dataObj) {
+    var task = new ROSLIB.Message({
+      data : JSON.stringify(dataObj)
+    })
+    console.log(JSON.stringify(dataObj))
+    sendTaskTopic.publish(task)
+  };
+
 
   /**
    * Send a goal to the navigation stack with the given pose.

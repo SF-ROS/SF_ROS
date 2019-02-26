@@ -53,6 +53,8 @@ var app = new Vue({
           that.init()
         } else {
           that.createGoalsFromPoseList()
+          //把所有标记点发送到机器人端
+          that.navigator.sendMessage(that.temp_pose_list)
         }
       }, 50)
     },
@@ -90,6 +92,8 @@ var app = new Vue({
     
     save: function() {
       localStorage.pose_list = JSON.stringify(this.temp_pose_list)
+      //把所有标记点发送到机器人端
+      this.navigator.sendMessage(this.temp_pose_list)
       location.reload()
     },
 
@@ -133,6 +137,8 @@ var app = new Vue({
         reader.onload = (function (theFile) {
           return function (e) {
             that.temp_pose_list = JSON.parse(e.target.result)
+            //把所有标记点发送到机器人端
+            that.navigator.sendMessage(that.temp_pose_list)
             localStorage.pose_list = JSON.stringify(that.temp_pose_list)
           };
         })(file);
@@ -267,7 +273,7 @@ var app = new Vue({
         this.changeColor(this.currentTask,'component2')
 
         that = this
-        poseIndex = this.task_list[this.currentTask];
+        poseIndex = this.task_list[this.currentTask]
         pose = this.temp_pose_list[poseIndex][1]
         goal = this.navigator.createGoal(pose, this.goal_result_callback)
 
@@ -275,8 +281,6 @@ var app = new Vue({
         goal.send();
         console.log('goal start!'+ goal.toString())
 
-        //把所有点发送过去
-        this.navigator.sendMessage(this.temp_pose_list)
       }
     },
 
@@ -297,6 +301,13 @@ var app = new Vue({
       this.is_task = false;
       this.is_pause = false;
     },
+
+    /**
+     * 将任务列表发送到机器人端
+     */
+    taskSend:function () {
+      this.navigator.sendTask(this.task_list)
+    }
 
   }
 })
