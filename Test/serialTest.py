@@ -23,7 +23,8 @@ class NavTest():
             position = pose[1]['position']
             orientation = pose[1]['orientation']
             poseName = pose[0]
-            self.locations[index] = Pose(Point(position['x'], position['y'], position['z']),  Quaternion(orientation['x'], orientation['y'], orientation['z'], orientation['w']))
+            self.locations[index] = Pose(Point(position['x'], position['y'], position['z']),
+                                         Quaternion(orientation['x'], orientation['y'], orientation['z'], orientation['w']))
             self.pose_name[index] = poseName
 
     def sendTask_callback(self,data):
@@ -86,16 +87,16 @@ class NavTest():
         while initial_pose.header.stamp == "":
             rospy.sleep(1)
 
-        #保存成功率、运行时间、和距离的变量
-        n_locations = len(self.locations)
-        n_goals = 0
-        n_successes = 0
-        i = n_locations
-        distance_traveled = 0
-        start_time = rospy.Time.now()
-        running_time = 0
-        location = ""
-        last_location = ""
+        # #保存成功率、运行时间、和距离的变量
+        # n_locations = len(self.locations)
+        # n_goals = 0
+        # n_successes = 0
+        # i = n_locations
+        # distance_traveled = 0
+        # start_time = rospy.Time.now()
+        # running_time = 0
+        # location = ""
+        # last_location = ""
 
 
         rospy.loginfo("Starting navigation task")
@@ -106,7 +107,7 @@ class NavTest():
             if self.is_newTask:
 
                 self.current_task = 0
-                n_taskLists = len(self.task_list)
+                self.n_taskList = len(self.task_list)
                 self.is_newTask = False
 
             if self.current_task == self.n_taskList:
@@ -146,9 +147,9 @@ class NavTest():
                 self.move_base.cancel_goal()
                 rospy.loginfo("Timed out achieving goal")
             else:
-                self.current_task =+1
+                self.current_task +=1
 
-
+            rospy.sleep(self.rest_time)
 
 
         # # 开始主循环，随机导航

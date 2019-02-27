@@ -279,7 +279,7 @@ var app = new Vue({
 
         this.is_task = true;
         goal.send();
-        console.log('goal start!'+ goal.toString())
+        console.log('goal start!')
 
       }
     },
