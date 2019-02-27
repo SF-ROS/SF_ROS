@@ -55,7 +55,7 @@ function init() {
         <button id="save" class="btn btn-primary" v-on:click="save">保存</button>
         <button id="export" class="btn btn-primary" v-on:click="exportPoseList">导出标记点</button>
         <button id="load" class="btn btn-primary" v-on:click="loadPoseList">加载标记点</button>
-        <button id="open_port" class="btn btn-primary" v-on:click="open_port">打开串口</button>
+        <button id="open_port" class="btn btn-primary" v-on:click="open_port">地图缩放</button>
         <input id="input_pose_list" type="file" name="input_pose_list" style="display: none;" v-on:change="loadFile"/>
         <div class="alert alert-success alert-dismissible" role="alert" v-if="showExportSucc" v-on:click="showExportSucc=false">导出成功</div>
         <div class="alert alert-danger alert-dismissible" role="alert" v-if="showExportFail" v-on:click="showExportFail=false">导出失败</div>

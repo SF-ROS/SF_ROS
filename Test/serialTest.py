@@ -80,6 +80,10 @@ class NavTest():
         while not self.task_list:
             rospy.sleep(1)
 
+        #确保已经收到了坐标点
+        while len(self.locations)<1:
+            rospy.sleep(1)
+
         # 保存机器人的在rviz中的初始位置
         initial_pose = PoseWithCovarianceStamped()
 
@@ -137,7 +141,6 @@ class NavTest():
             rospy.loginfo("Going to: " + self.pose_name[self.task_list[self.current_task]])
 
             self.move_base.send_goal(self.goal)
-            self.move_base.wait_for_result(rospy.Duration.from_sec(5.0))
 
             # 五分钟时间限制
             finished_within_time = self.move_base.wait_for_result(rospy.Duration(300))
@@ -147,6 +150,7 @@ class NavTest():
                 self.move_base.cancel_goal()
                 rospy.loginfo("Timed out achieving goal")
             else:
+                rospy.loginfo("Arrived at: " + self.pose_name[self.task_list[self.current_task]])
                 self.current_task +=1
 
             rospy.sleep(self.rest_time)

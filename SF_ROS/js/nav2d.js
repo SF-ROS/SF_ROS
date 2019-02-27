@@ -414,6 +414,11 @@ NAV2D.OccupancyGridClientNav = function (options) {
         that.viewer.scaleToDimensions(client.currentGrid.width, client.currentGrid.height);
         that.viewer.shift(client.currentGrid.pose.position.x, client.currentGrid.pose.position.y);
     });
+
+    that.changeSize = function () {
+      console.log('地图缩放')
+    }
+
 };
 
 function isatpc() {

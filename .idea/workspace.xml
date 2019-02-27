@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="dc7f0989-14f4-44a7-9287-29b071032c8b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SF_ROS/js/nav2d.js" beforeDir="false" afterPath="$PROJECT_DIR$/SF_ROS/js/nav2d.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SF_ROS/js/sfrobot.js" beforeDir="false" afterPath="$PROJECT_DIR$/SF_ROS/js/sfrobot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SF_ROS/web.html" beforeDir="false" afterPath="$PROJECT_DIR$/SF_ROS/web.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/serialTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/serialTest.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,17 +19,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SF_ROS/web.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1666">
-              <caret line="98" column="86" selection-start-line="98" selection-start-column="86" selection-end-line="98" selection-end-column="86" />
+            <state relative-caret-position="204">
+              <caret line="57" column="82" selection-start-line="57" selection-start-column="82" selection-end-line="57" selection-end-column="82" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SF_ROS/js/sfrobot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="281" column="33" selection-start-line="281" selection-start-column="33" selection-end-line="281" selection-end-column="33" />
+            <state relative-caret-position="-514">
+              <caret line="245" column="4" selection-start-line="245" selection-start-column="4" selection-end-line="245" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -35,8 +37,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/serialTest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1870">
-              <caret line="40" column="29" lean-forward="true" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
+            <state relative-caret-position="951">
+              <caret line="141" selection-start-line="141" selection-end-line="141" />
               <folding>
                 <element signature="e#48#61#0" expanded="true" />
               </folding>
@@ -55,11 +57,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SF_ROS/js/nav2d.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2948">
-              <caret line="120" column="32" lean-forward="true" selection-start-line="120" selection-start-column="32" selection-end-line="120" selection-end-column="32" />
+            <state relative-caret-position="459">
+              <caret line="418" column="23" selection-start-line="418" selection-start-column="23" selection-end-line="418" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SF_ROS/js/ros2d.min.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="13917" selection-start-column="13917" selection-end-column="13917" />
             </state>
           </provider>
         </entry>
@@ -70,6 +81,8 @@
     <findStrings>
       <find>last_location</find>
       <find>distance_traveled</find>
+      <find>viewer</find>
+      <find>currentGrid</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -78,10 +91,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/SF_ROS/web.html" />
-        <option value="$PROJECT_DIR$/SF_ROS/js/nav2d.js" />
         <option value="$PROJECT_DIR$/Test/serialTest.py" />
+        <option value="$PROJECT_DIR$/SF_ROS/web.html" />
         <option value="$PROJECT_DIR$/SF_ROS/js/sfrobot.js" />
+        <option value="$PROJECT_DIR$/SF_ROS/js/nav2d.js" />
       </list>
     </option>
   </component>
@@ -128,7 +141,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Test/serialTest.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../wb/public" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -171,6 +184,9 @@
       <module name="ros_web" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="$PROJECT_DIR$/../pycharm_project/AGV/venv/bin/python" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Test" />
       <option name="IS_MODULE_SDK" value="false" />
@@ -205,12 +221,12 @@
       <workItem from="1550483436518" duration="68000" />
       <workItem from="1550483519024" duration="54000" />
       <workItem from="1551162792466" duration="12514000" />
-      <workItem from="1551231783602" duration="2766000" />
+      <workItem from="1551231783602" duration="12525000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15402000" />
+    <option name="totallyTimeSpent" value="25161000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="410" y="31" width="1510" height="1033" extended-state="0" />
@@ -250,13 +266,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SF_ROS/web.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1666">
-          <caret line="98" column="86" selection-start-line="98" selection-start-column="86" selection-end-line="98" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SF_ROS/js/vue2.5.22.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -268,25 +277,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/serialTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1870">
-          <caret line="40" column="29" lean-forward="true" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
+        <state relative-caret-position="951">
+          <caret line="141" selection-start-line="141" selection-end-line="141" />
           <folding>
             <element signature="e#48#61#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SF_ROS/js/nav2d.js">
+    <entry file="file://$PROJECT_DIR$/SF_ROS/js/ros2d.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2948">
-          <caret line="120" column="32" lean-forward="true" selection-start-line="120" selection-start-column="32" selection-end-line="120" selection-end-column="32" />
+        <state>
+          <caret column="13917" selection-start-column="13917" selection-end-column="13917" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SF_ROS/web.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="57" column="82" selection-start-line="57" selection-start-column="82" selection-end-line="57" selection-end-column="82" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SF_ROS/js/sfrobot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="281" column="33" selection-start-line="281" selection-start-column="33" selection-end-line="281" selection-end-column="33" />
+        <state relative-caret-position="-514">
+          <caret line="245" column="4" selection-start-line="245" selection-start-column="4" selection-end-line="245" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SF_ROS/js/nav2d.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="418" column="23" selection-start-line="418" selection-start-column="23" selection-end-line="418" selection-end-column="23" />
         </state>
       </provider>
     </entry>
