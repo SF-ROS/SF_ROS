@@ -154,7 +154,9 @@ var app = new Vue({
      * 地图缩放
      */
     open_port:function () {
-      this.OccupancyGridClientNav.changeSize()
+
+      // this.changeSize()
+
     },
 
 

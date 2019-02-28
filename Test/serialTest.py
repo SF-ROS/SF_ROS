@@ -48,6 +48,10 @@ class NavTest():
         rospy.Subscriber("/sendPose", String, self.sendPose_callback)
         rospy.Subscriber("/sendTask",String,self.sendTask_callback)
 
+        #速度0.2米每秒
+        linear_speed = 0.2
+
+
         # 在每个目标位置暂停的时间 (单位：s)
         self.rest_time = rospy.get_param("~rest_time", 2)
 
@@ -151,6 +155,30 @@ class NavTest():
                 rospy.loginfo("Timed out achieving goal")
             else:
                 rospy.loginfo("Arrived at: " + self.pose_name[self.task_list[self.current_task]])
+
+                if self.pose_name[self.task_list[self.current_task]] == 'C点':
+                    move_cmd = Twist()
+                    move_cmd.linear.x = -linear_speed
+                    self.cmd_vel_pub.publish(move_cmd)
+                    rospy.loginfo('开始后退')
+                    rospy.sleep(5)
+
+                    move_cmd.linear.x = 0
+                    self.cmd_vel_pub.publish(move_cmd)
+                    rospy.loginfo('开始充电')
+                    rospy.sleep(5)
+
+                    move_cmd.linear.x = linear_speed
+                    self.cmd_vel_pub.publish(move_cmd)
+                    rospy.loginfo('充电完成,开始复位')
+                    rospy.sleep(5)
+
+                    move_cmd.linear.x = 0
+                    self.cmd_vel_pub.publish(move_cmd)
+                    rospy.loginfo('恢复导航,闲置10秒')
+                    rospy.sleep(10)
+
+
                 self.current_task +=1
 
             rospy.sleep(self.rest_time)
