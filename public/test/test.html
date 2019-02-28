@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+</head>
+<body>
+    <div>
+        <h2>test</h2>
+        <canvas id="demoCanvas"></canvas>
+    </div>
+</body>
+<script>
+    window.onload=function(){
+        var canvas=document.getElementById('demoCanvas');
+        canvas.width=window.innerWidth;
+        canvas.height=window.innerHeight;
+        var stage=new createjs.Stage('demoCanvas');
+        var container=new createjs.Container();//绘制外部容器
+        stage.addChild(container);
+        //加载图片
+        var image=new Image();
+        image.src="map214.pgm";
+        image.onload=handlerImageLoad;
+
+        function handlerImageLoad(event){
+          var bitmap=new createjs.Bitmap(event.target);
+          bitmap.x=canvas.width-bitmap.getBounds().width>>1;
+          bitmap.y=canvas.height-bitmap.getBounds().height>>1;
+
+          container.addChild(bitmap);
+          stage.update();
+        }
+
+        var circle = new createjs.Shape();
+        circle.graphics.setStrokeStyle(2).beginStroke("rgba(0,0,0,0.5)").beginFill("orange").drawCircle(0,0,50);
+        circle.x=55;
+        circle.y=100;
+        stage.addChild(circle);
+        stage.update();
+    };
+</script>
+</html>
