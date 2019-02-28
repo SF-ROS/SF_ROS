@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc7f0989-14f4-44a7-9287-29b071032c8b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SF_ROS/js/nav2d.js" beforeDir="false" afterPath="$PROJECT_DIR$/SF_ROS/js/nav2d.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SF_ROS/js/sfrobot.js" beforeDir="false" afterPath="$PROJECT_DIR$/SF_ROS/js/sfrobot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/serialTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/serialTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SF_ROS/web.html" beforeDir="false" afterPath="$PROJECT_DIR$/SF_ROS/web.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SF_ROS/web.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="25" column="31" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="31" />
+            <state relative-caret-position="339">
+              <caret line="57" column="82" selection-start-line="57" selection-start-column="82" selection-end-line="57" selection-end-column="82" />
             </state>
           </provider>
         </entry>
@@ -27,8 +26,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SF_ROS/js/sfrobot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="158" lean-forward="true" selection-start-line="158" selection-end-line="158" />
+            <state relative-caret-position="476">
+              <caret line="157" selection-start-line="157" selection-end-line="157" />
             </state>
           </provider>
         </entry>
@@ -65,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SF_ROS/js/nav2d.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="521" column="63" selection-start-line="521" selection-start-column="63" selection-end-line="521" selection-end-column="63" />
+            <state relative-caret-position="63">
+              <caret line="268" column="18" selection-start-line="268" selection-start-column="18" selection-end-line="268" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -101,11 +100,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/SF_ROS/web.html" />
         <option value="$PROJECT_DIR$/SF_ROS/js/dashboard.js" />
         <option value="$PROJECT_DIR$/Test/serialTest.py" />
-        <option value="$PROJECT_DIR$/SF_ROS/js/sfrobot.js" />
         <option value="$PROJECT_DIR$/SF_ROS/js/nav2d.js" />
+        <option value="$PROJECT_DIR$/SF_ROS/js/sfrobot.js" />
+        <option value="$PROJECT_DIR$/SF_ROS/web.html" />
       </list>
     </option>
   </component>
@@ -234,12 +233,12 @@
       <workItem from="1551162792466" duration="12514000" />
       <workItem from="1551231783602" duration="12525000" />
       <workItem from="1551259604239" duration="1220000" />
-      <workItem from="1551318424903" duration="20878000" />
+      <workItem from="1551318424903" duration="21191000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47259000" />
+    <option name="totallyTimeSpent" value="47572000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="366" y="24" width="1510" height="1033" extended-state="0" />
@@ -312,24 +311,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SF_ROS/web.html">
+    <entry file="file://$PROJECT_DIR$/SF_ROS/js/nav2d.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="25" column="31" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="31" />
+        <state relative-caret-position="63">
+          <caret line="268" column="18" selection-start-line="268" selection-start-column="18" selection-end-line="268" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SF_ROS/js/sfrobot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="158" lean-forward="true" selection-start-line="158" selection-end-line="158" />
+        <state relative-caret-position="476">
+          <caret line="157" selection-start-line="157" selection-end-line="157" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SF_ROS/js/nav2d.js">
+    <entry file="file://$PROJECT_DIR$/SF_ROS/web.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="521" column="63" selection-start-line="521" selection-start-column="63" selection-end-line="521" selection-end-column="63" />
+        <state relative-caret-position="339">
+          <caret line="57" column="82" selection-start-line="57" selection-start-column="82" selection-end-line="57" selection-end-column="82" />
         </state>
       </provider>
     </entry>

@@ -265,6 +265,8 @@ NAV2D.Navigator = function(options) {
     var keyflag = true
 
     var mouseEventHandler = function(event, mouseState) {
+
+      //键盘上下左右控制平移
     　$(document).keydown(function(event){
     　　if(event.keyCode === 38&&keyflag ){
   　　　　app.shiftUp()
@@ -289,22 +291,7 @@ NAV2D.Navigator = function(options) {
     　$(document).keyup(function(event){
         keyflag = true
     　});
-      
-      // if (mouseState==='keypress'){
-      //   if (event.keyCode===38){
-      //     app.shiftUp()
-      //     keyflag = false
-      //   }
-      // }
-      //
-      // if (mouseState==='keyup'){
-      //   keyflag = true
-      // }
 
-      //禁用鼠标右键
-      // document.oncontextmenu=function(){
-      // return false;
-      // }
 
       //鼠标滚轮事件
       if (mouseState ==='scroll'){
@@ -504,7 +491,7 @@ NAV2D.OccupancyGridClientNav = function (options) {
       that.viewer.shift(client.currentGrid.pose.position.x*=1.1, client.currentGrid.pose.position.y*=1.1);
     }
 
-    //键盘上下左右键
+    //键盘上下左右键控制viwer图像平移
     state.shiftUp = function () {
       that.viewer.scaleToDimensions(client.currentGrid.width, client.currentGrid.height);
       that.viewer.shift(client.currentGrid.pose.position.x, client.currentGrid.pose.position.y*=1.1);

@@ -151,11 +151,11 @@ var app = new Vue({
 
 
     /**
-     * 地图缩放
+     * 测试按钮
      */
     open_port:function () {
 
-      // this.changeSize()
+
 
     },
 
