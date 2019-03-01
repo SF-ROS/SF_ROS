@@ -266,55 +266,54 @@ NAV2D.Navigator = function(options) {
 
     var mouseEventHandler = function(event, mouseState) {
 
-      //键盘上下左右控制平移
-    　$(document).keydown(function(event){
-    　　if(event.keyCode === 38&&keyflag ){
-  　　　　app.shiftUp()
-          keyflag = false
-          console.log('up')
-    　　}
-        if(event.keyCode === 40&&keyflag ){
-  　　　　app.shiftDown()
-          keyflag = false
-          console.log('up')
-    　　}if(event.keyCode === 37&&keyflag ){
-  　　　　app.shiftLeft()
-          keyflag = false
-          console.log('up')
-    　　}
-        if(event.keyCode === 39&&keyflag ){
-  　　　　app.shiftRight()
-          keyflag = false
-          console.log('up')
-    　　}
-    　});
-    　$(document).keyup(function(event){
-        keyflag = true
-    　});
-
-
-      //鼠标滚轮事件
-      if (mouseState ==='scroll'){
-
-        //IE、Opera、Safari、Chrome
-        if (event.wheelDelta){
-          if (event.wheelDelta>0){
-            app.changeSizeBig()
+      //地图缩放的开关
+      if($('#user-switch').is(':checked')) {
+        //键盘上下左右控制平移
+        $(document).keydown(function (event) {
+          if (event.keyCode === 38 && keyflag) {
+            app.shiftUp()
+            keyflag = false
           }
-          else {
-            app.changeSizeSmall()
+          if (event.keyCode === 40 && keyflag) {
+            app.shiftDown()
+            keyflag = false
           }
+          if (event.keyCode === 37 && keyflag) {
+            app.shiftLeft()
+            keyflag = false
+          }
+          if (event.keyCode === 39 && keyflag) {
+            app.shiftRight()
+            keyflag = false
+          }
+        });
+        $(document).keyup(function (event) {
+          keyflag = true
+        });
+
+
+        //鼠标滚轮事件
+        if (mouseState === 'scroll') {
+
+          //IE、Opera、Safari、Chrome
+          if (event.wheelDelta) {
+            if (event.wheelDelta > 0) {
+              app.changeSizeBig()
+            } else {
+              app.changeSizeSmall()
+            }
+          }
+          //Firefox
+          if (event.detail) {
+            if (event.detail > 0) {
+              app.changeSizeBig()
+            } else {
+              app.changeSizeSmall()
+            }
+          }
+
         }
-        //Firefox
-        if (event.detail){
-          if (event.detail>0){
-            app.changeSizeBig()
-          }
-          else {
-            app.changeSizeSmall()
-          }
-        }
-        
+
       }
       
 

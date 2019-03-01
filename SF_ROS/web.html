@@ -51,11 +51,20 @@ function init() {
     <div class="row">
       <div class="col-lg-6">
         <div id="nav"></div>
-        <button id="refresh" class="btn btn-primary" v-on:click="refresh">刷新</button>
-        <button id="save" class="btn btn-primary" v-on:click="save">保存</button>
-        <button id="export" class="btn btn-primary" v-on:click="exportPoseList">导出标记点</button>
-        <button id="load" class="btn btn-primary" v-on:click="loadPoseList">加载标记点</button>
-        <button id="open_port" class="btn btn-primary" v-on:click="open_port">测试按钮</button>
+        <div class="viewer-btn-group">
+          <button id="refresh" class="btn btn-primary" v-on:click="refresh">刷新</button>
+          <button id="save" class="btn btn-primary" v-on:click="save">保存</button>
+          <button id="export" class="btn btn-primary" v-on:click="exportPoseList">导出标记点</button>
+          <button id="load" class="btn btn-primary" v-on:click="loadPoseList">加载标记点</button>
+          <div style="display:inline-block;float: right;margin-right: 50px;">
+            <button class="btn btn-primary" style="margin-bottom: 15px">地图缩放</button>
+            <div class="switch-container">
+                <input type="checkbox" id="user-switch" checked>
+                <label for="user-switch"></label>
+            </div>
+          </div>
+          <button id="open_port" class="btn btn-primary" v-on:click="open_port">测试按钮</button>
+        </div>
         <input id="input_pose_list" type="file" name="input_pose_list" style="display: none;" v-on:change="loadFile"/>
         <div class="alert alert-success alert-dismissible" role="alert" v-if="showExportSucc" v-on:click="showExportSucc=false">导出成功</div>
         <div class="alert alert-danger alert-dismissible" role="alert" v-if="showExportFail" v-on:click="showExportFail=false">导出失败</div>
