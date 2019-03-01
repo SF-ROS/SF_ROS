@@ -262,7 +262,60 @@ NAV2D.Navigator = function(options) {
     var xDelta = 0;
     var yDelta = 0;
 
+    var keyflag = true
+
     var mouseEventHandler = function(event, mouseState) {
+
+      //地图缩放的开关
+      if($('#user-switch').is(':checked')) {
+        //键盘上下左右控制平移
+        $(document).keydown(function (event) {
+          if (event.keyCode === 38 && keyflag) {
+            app.shiftUp()
+            keyflag = false
+          }
+          if (event.keyCode === 40 && keyflag) {
+            app.shiftDown()
+            keyflag = false
+          }
+          if (event.keyCode === 37 && keyflag) {
+            app.shiftLeft()
+            keyflag = false
+          }
+          if (event.keyCode === 39 && keyflag) {
+            app.shiftRight()
+            keyflag = false
+          }
+        });
+        $(document).keyup(function (event) {
+          keyflag = true
+        });
+
+
+        //鼠标滚轮事件
+        if (mouseState === 'scroll') {
+
+          //IE、Opera、Safari、Chrome
+          if (event.wheelDelta) {
+            if (event.wheelDelta > 0) {
+              app.changeSizeBig()
+            } else {
+              app.changeSizeSmall()
+            }
+          }
+          //Firefox
+          if (event.detail) {
+            if (event.detail > 0) {
+              app.changeSizeBig()
+            } else {
+              app.changeSizeSmall()
+            }
+          }
+
+        }
+
+      }
+      
 
       if (mouseState === 'down'){
         // get position when mouse button is pressed down
@@ -361,16 +414,25 @@ NAV2D.Navigator = function(options) {
     };
 
     this.rootObject.addEventListener('stagemousedown', function(event) {
-      mouseEventHandler(event,'down');
+        mouseEventHandler(event,'down');
     });
 
     this.rootObject.addEventListener('stagemousemove', function(event) {
-      mouseEventHandler(event,'move');
+        mouseEventHandler(event,'move');
     });
 
     this.rootObject.addEventListener('stagemouseup', function(event) {
-      mouseEventHandler(event,'up');
+        mouseEventHandler(event,'up');
     });
+
+
+    this.rootObject.addEventListener('DOMMouseScroll',function (event) {
+      mouseEventHandler(event,'scroll');
+    },false);
+
+    window.onmousewheel=document.onmousewheel=function (event) {
+      mouseEventHandler(event,'scroll');
+    }
   }
 };
 
@@ -389,7 +451,8 @@ NAV2D.OccupancyGridClientNav = function (options) {
     this.rootObject = options.rootObject || new createjs.Container();
     this.viewer = options.viewer;
     this.withOrientation = options.withOrientation || false;
-    
+
+
     this.navigator = null;
      // ��Ӧ�ƶ��˵��޸� ��ʼ
     // setup a client to get the map
@@ -415,11 +478,39 @@ NAV2D.OccupancyGridClientNav = function (options) {
         that.viewer.shift(client.currentGrid.pose.position.x, client.currentGrid.pose.position.y);
     });
 
-    that.changeSize = function () {
-      console.log('地图缩放')
+    //滚轮放大图
+    state.changeSizeBig = function () {
+      that.viewer.scaleToDimensions(client.currentGrid.width*=0.9, client.currentGrid.height*=0.9);
+      that.viewer.shift(client.currentGrid.pose.position.x*=0.9, client.currentGrid.pose.position.y*=0.9);
+    }
+
+    //滚轮缩小图
+    state.changeSizeSmall = function () {
+      that.viewer.scaleToDimensions(client.currentGrid.width*=1.1, client.currentGrid.height*=1.1);
+      that.viewer.shift(client.currentGrid.pose.position.x*=1.1, client.currentGrid.pose.position.y*=1.1);
+    }
+
+    //键盘上下左右键控制viwer图像平移
+    state.shiftUp = function () {
+      that.viewer.scaleToDimensions(client.currentGrid.width, client.currentGrid.height);
+      that.viewer.shift(client.currentGrid.pose.position.x, client.currentGrid.pose.position.y*=1.1);
+    }
+    state.shiftDown = function () {
+      that.viewer.scaleToDimensions(client.currentGrid.width, client.currentGrid.height);
+      that.viewer.shift(client.currentGrid.pose.position.x, client.currentGrid.pose.position.y*=0.9);
+    }
+    state.shiftLeft = function () {
+      that.viewer.scaleToDimensions(client.currentGrid.width, client.currentGrid.height);
+      that.viewer.shift(client.currentGrid.pose.position.x*=0.9, client.currentGrid.pose.position.y);
+    }
+    state.shiftRight = function () {
+      that.viewer.scaleToDimensions(client.currentGrid.width, client.currentGrid.height);
+      that.viewer.shift(client.currentGrid.pose.position.x*=1.1, client.currentGrid.pose.position.y);
     }
 
 };
+
+
 
 function isatpc() {
     var userAgentInfo = navigator.userAgent;

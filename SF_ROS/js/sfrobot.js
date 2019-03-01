@@ -156,7 +156,6 @@ var app = new Vue({
     open_port:function () {
 
 
-
     },
 
 

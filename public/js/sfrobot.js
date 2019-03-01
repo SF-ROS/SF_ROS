@@ -74,9 +74,7 @@ var app = new Vue({
      * 刷新按钮
      */
     refresh: function(){
-      // location.reload();
-      // document.getElementById('sidebar_nav').click()
-      location.replace(location.href);
+      location.reload();
     },
 
     /**
@@ -150,14 +148,6 @@ var app = new Vue({
     },
 
 
-
-
-    /**
-     * 地图缩放
-     */
-    open_port:function () {
-      this.OccupancyGridClientNav.changeSize()
-    },
 
 
     /**

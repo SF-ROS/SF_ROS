@@ -9,6 +9,7 @@
     <meta name="x5-fullscreen" content="true">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="icon" href="src/sjtu32.ico">
+    <link rel="stylesheet" href="css/sfstyle.css">
     <title>AGV Dashboard</title>
 
     <link rel="stylesheet" href="css/jquery-ui.min.css">
@@ -42,7 +43,7 @@
                     <span class="icon-bar" style="background-color: #e5483c"></span>
                 </button>
                 <ul class="dropdown-menu pull-right" id="navdrop">
-                    <li class="active"><a href="javascript:void(0)" id="drop_motion">运动</a></li>
+                    <li><a href="javascript:void(0)" id="drop_motion">运动</a></li>
                     <li><a href="javascript:void(0)" id="drop_map">建图</a></li>
                     <li><a href="javascript:void(0)" id="drop_nav">导航</a></li>
                     <li><a href="javascript:void(0)" id="drop_trace">跟踪</a></li>
@@ -58,7 +59,7 @@
 
             <div class="col-sm-2 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li class="active"><a href="javascript:void(0)" id="sidebar_motion">运动</a></li>
+                    <li><a href="javascript:void(0)" id="sidebar_motion">运动</a></li>
                     <li><a href="javascript:void(0)" id="sidebar_map">建图</a></li>
                     <li><a href="javascript:void(0)" id="sidebar_nav">导航</a></li>
                     <li><a href="javascript:void(0)" id="sidebar_trace">跟踪</a></li>
@@ -220,77 +221,83 @@
                 <!--</div>-->
                 <div id="app">
 
-  <div class="container" style="width: 1600px">
-    <div class="row">
-      <div class="col-md-5">
-        <div class="row" id="nav_row1">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="nav_map">
-                        <!--<img src="src/temp_map.png" class="img-responsive" alt="Temp Map" id="nav_mapper">-->
-                        <!--<i class="fa fa-map-marker fa-5x" id="nav_start"></i>-->
-                        <!--<i class="fa fa-map-marker fa-5x" id="nav_end"></i>-->
-                        <!--<i class="fa fa-location-arrow fa-5x" id="nav_current"></i>-->
+                  <div class="container" style="width: 1600px">
+
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="row" id="nav_row1">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="nav_map">
+                                        <!--<img src="src/temp_map.png" class="img-responsive" alt="Temp Map" id="nav_mapper">-->
+                                        <!--<i class="fa fa-map-marker fa-5x" id="nav_start"></i>-->
+                                        <!--<i class="fa fa-map-marker fa-5x" id="nav_end"></i>-->
+                                        <!--<i class="fa fa-location-arrow fa-5x" id="nav_current"></i>-->
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px">
+                            <button id="refresh" class="btn btn-primary" v-on:click="refresh">刷新</button>
+                            <button id="save" class="btn btn-primary" v-on:click="save">保存</button>
+                            <button id="export" class="btn btn-primary" v-on:click="exportPoseList">导出标记点</button>
+                            <button id="load" class="btn btn-primary" v-on:click="loadPoseList">加载标记点</button>
+                            <div style="display:inline-block;float: right;margin-right: 50px;">
+                                <button class="btn btn-primary" style="margin-bottom: 15px">地图缩放</button>
+                                <div class="switch-container">
+                                    <input type="checkbox" id="user-switch" checked>
+                                    <label for="user-switch"></label>
+                                </div>
+                            </div>
+                            <input id="input_pose_list" type="file" name="input_pose_list" style="display: none;" v-on:change="loadFile"/>
+                            <div class="alert alert-success alert-dismissible" role="alert" v-if="showExportSucc" v-on:click="showExportSucc=false">导出成功</div>
+                            <div class="alert alert-danger alert-dismissible" role="alert" v-if="showExportFail" v-on:click="showExportFail=false">导出失败</div>
+                        </div>
+                      </div>
+                      <div class="col-md-1"></div>
+                      <div class="col-md-6">
+                        <div style="height: 580px;overflow-y:scroll;margin-right: 80px">
+                          <!-- <div class="position-table"> -->
+                          <table class="table table-striped table-hover">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>名称</th>
+                                <th>坐标</th>
+                                <th><button class="btn btn-danger" v-on:click="delete_allPose">删除所有标记点</button></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(item, index) in temp_pose_list">
+                                <th scope="row">{{index + 1}}</th>
+                                <td>{{item[0]}}</td>
+                                <td>{{position_str.format(item[1].position.x.toFixed(3), item[1].position.y.toFixed(3), item[1].position.z.toFixed(3))}}</td>
+                                <td>
+                                  <button id="add_task" class="btn btn-success" v-on:click="add_task('component',index)">添加到任务</button>
+                                  <button id="edit_posename" class="btn btn-primary" v-on:click="edit_posename(index)">修改名称</button>
+                                  <button id="delete_pose" class="btn btn-danger" v-on:click="delete_pose(index)">删除</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div style="margin-top: 10px">
+                          <p>任务列表</p>
+                          <div id="task_list" style="border-style: solid; border-width: 1px; border-color: gray;width: 500px;height: 180px;overflow-y:scroll">
+                            <td><li style="margin: 5px" :is="item.component" :text="item.text" v-for="item in items"></li></td>
+                          </div>
+                          <div style="margin-top: 10px">
+                            <td>
+                              <button id="taskClean" class="btn btn-primary" v-on:click="taskClean">清空</button>
+                              <button id="taskStart" class="btn btn-primary" v-on:click="taskStart">开始</button>
+                              <button id="taskPause" class="btn btn-primary" v-on:click="taskPause">暂停</button>
+                              <button id="taskSend" class="btn btn-primary" v-on:click="taskSend">发送任务</button>
+                              <button id="mergeStop" class="btn btn-danger" v-on:click="mergeStop">急停</button>
+                            </td>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-        </div>
-        <div style="margin-top: 10px">
-            <button id="refresh" class="btn btn-primary" v-on:click="refresh">刷新</button>
-            <button id="save" class="btn btn-primary" v-on:click="save">保存</button>
-            <button id="export" class="btn btn-primary" v-on:click="exportPoseList">导出标记点</button>
-            <button id="load" class="btn btn-primary" v-on:click="loadPoseList">加载标记点</button>
-            <button id="open_port" class="btn btn-primary" v-on:click="open_port">地图缩放</button>
-            <input id="input_pose_list" type="file" name="input_pose_list" style="display: none;" v-on:change="loadFile"/>
-            <div class="alert alert-success alert-dismissible" role="alert" v-if="showExportSucc" v-on:click="showExportSucc=false">导出成功</div>
-            <div class="alert alert-danger alert-dismissible" role="alert" v-if="showExportFail" v-on:click="showExportFail=false">导出失败</div>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
-      <div class="col-md-6">
-        <div style="height: 580px;overflow-y:scroll;margin-right: 80px">
-          <!-- <div class="position-table"> -->
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>名称</th>
-                <th>坐标</th>
-                <th><button class="btn btn-danger" v-on:click="delete_allPose">删除所有标记点</button></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, index) in temp_pose_list">
-                <th scope="row">{{index + 1}}</th>
-                <td>{{item[0]}}</td>
-                <td>{{position_str.format(item[1].position.x.toFixed(3), item[1].position.y.toFixed(3), item[1].position.z.toFixed(3))}}</td>
-                <td>
-                  <button id="add_task" class="btn btn-success" v-on:click="add_task('component',index)">添加到任务</button>
-                  <button id="edit_posename" class="btn btn-primary" v-on:click="edit_posename(index)">修改名称</button>
-                  <button id="delete_pose" class="btn btn-danger" v-on:click="delete_pose(index)">删除</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div style="margin-top: 10px">
-          <p>任务列表</p>
-          <div id="task_list" style="border-style: solid; border-width: 1px; border-color: gray;width: 500px;height: 180px;overflow-y:scroll">
-            <td><li style="margin: 5px" :is="item.component" :text="item.text" v-for="item in items"></li></td>
-          </div>
-          <div style="margin-top: 10px">
-            <td>
-              <button id="taskClean" class="btn btn-primary" v-on:click="taskClean">清空</button>
-              <button id="taskStart" class="btn btn-primary" v-on:click="taskStart">开始</button>
-              <button id="taskPause" class="btn btn-primary" v-on:click="taskPause">暂停</button>
-              <button id="taskSend" class="btn btn-primary" v-on:click="taskSend">发送任务</button>
-              <button id="mergeStop" class="btn btn-danger" v-on:click="mergeStop">急停</button>
-            </td>
-          </div>
-        </div>
-      </div>
 
-    </div>
-  </div>
+                  </div>
 
-
-</div>
+                </div>
 
             </div>
 

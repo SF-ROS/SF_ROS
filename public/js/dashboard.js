@@ -2,7 +2,7 @@ var showmodechange = false;
 var velocity = 0.2; // 小车的直线速度
 var omega = 0.4; // 小车的角速度
 // var moveinterval = 200;
-var mainviewrnum = 1;
+var mainviewrnum = 3;
 var robostate = 4; // 下位机模式
 var droped = 0;
 var ismapping = false;
@@ -381,21 +381,23 @@ $(document).ready(function () {
             "height": "700px",
             "padding": "0",
             "margin-left": "0",
-            "margin-right": "0"
+            "margin-right": "0",
         });
-        var viewer_map = new ROS2D.Viewer({
-            divID: 'map_map',
-            width: 700,
-            height: 700
-        }); // 显示地图 canvas easeljs
-        var map_map_image = new NAV2D.OccupancyGridClientNav({
-            ros: ros,
-            rootObject: viewer_map.scene,
-            viewer: viewer_map,
-            serverName: '/move_base',
-            withOrientation: true,
-            continuous: true
-        });
+
+        // var viewer_map = new ROS2D.Viewer({
+        //     divID: 'map_map',
+        //     width: 700,
+        //     height: 700
+        // }); // 显示地图 canvas easeljs
+        //
+        // var map_map_image = new NAV2D.OccupancyGridClientNav({
+        //     ros: ros,
+        //     rootObject: viewer_map.scene,
+        //     viewer: viewer_map,
+        //     serverName: '/move_base',
+        //     withOrientation: true,
+        //     continuous: true
+        // });
 
         div_nav.css({
             "text-align": "center",
@@ -778,8 +780,10 @@ function main_motion_clicked() {
     mainviewrnum = 1;
     sendmode(4);
     robostate = 4;
+    // location.reload();
 }
 
+var is_map_viewer = false
 //显示建图界面
 function main_map_clicked() {
     $("#main_motion").css('display', 'none');
@@ -787,6 +791,28 @@ function main_map_clicked() {
     $("#main_nav").css('display', 'none');
     $("#main_trace").css('display', 'none');
     $("#main_params").css('display', 'none');
+
+    if(!is_map_viewer){
+
+        is_map_viewer = true;
+
+        var viewer_map = new ROS2D.Viewer({
+            divID: 'map_map',
+            width: 700,
+            height: 700
+        }); // 显示地图 canvas easeljs
+
+        var map_map_image = new NAV2D.OccupancyGridClientNav({
+            ros: ros,
+            rootObject: viewer_map.scene,
+            viewer: viewer_map,
+            serverName: '/move_base',
+            withOrientation: true,
+            continuous: true
+        });
+    }
+
+
     mainviewrnum = 2;
     if (robostate === 4) {
         var r = confirm("请确认是否使用上次的地图...");
@@ -804,14 +830,15 @@ function main_map_clicked() {
 
 //显示导航界面
 function main_nav_clicked() {
-    $("#main_motion").css('display', 'none');
-    $("#main_map").css('display', 'none');
-    $("#main_nav").css('display', 'block');
-    $("#main_trace").css('display', 'none');
-    $("#main_params").css('display', 'none');
+    // $("#main_motion").css('display', 'none');
+    // $("#main_map").css('display', 'none');
+    // $("#main_nav").css('display', 'block');
+    // $("#main_trace").css('display', 'none');
+    // $("#main_params").css('display', 'none');
     mainviewrnum = 3;
     sendmode(2);
     robostate = 2;
+    location.reload();
 }
 
 //显示跟踪界面

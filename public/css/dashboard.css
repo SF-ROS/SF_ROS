@@ -83,12 +83,12 @@
     background-color: #fbfbfb;
 }
 
-#main_motion {
+#main_nav {
     display: block;
 }
 
+#main_motion,
 #main_map,
-#main_nav,
 #main_trace,
 #main_params,
 #main_settings {
