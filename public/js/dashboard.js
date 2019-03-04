@@ -11,8 +11,22 @@ var firsttrace = true;
 var sight_x = 0;
 var sight_y = 0;
 
+//设置启动web时连接的ros服务地址,ip通过url参数传入
+function getRosServerAddress() {
+   var value;
+   var str=location.href; //取得整个地址栏
+   var num=str.indexOf("?");
+   str=str.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
+   num=str.indexOf("=");
+   value=str.substr(num+1);
+   console.log('connect to rosServer:'+value);
+
+   return value
+}
+
 var ros = new ROSLIB.Ros({
     url: 'ws://192.168.1.102:9090' //'ws://172.20.10.4:9090' // 10.161.192.175 // 192.168.1.3
+    // url: 'ws://'+getRosServerAddress()
 }); // websocket下位机IP地址
 var cmdVel = new ROSLIB.Topic({
     ros: ros,
