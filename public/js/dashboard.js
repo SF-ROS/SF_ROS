@@ -378,7 +378,7 @@ $(document).ready(function () {
         div_map.css({
             "text-align": "center",
             "width": "100%",
-            "height": "700px",
+            "height": "650px",
             "padding": "0",
             "margin-left": "0",
             "margin-right": "0",
@@ -798,8 +798,8 @@ function main_map_clicked() {
 
         var viewer_map = new ROS2D.Viewer({
             divID: 'map_map',
-            width: 700,
-            height: 700
+            width: 650,
+            height: 650
         }); // 显示地图 canvas easeljs
 
         var map_map_image = new NAV2D.OccupancyGridClientNav({

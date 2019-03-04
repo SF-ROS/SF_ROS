@@ -47,12 +47,16 @@ var app = new Vue({
      */
     init: function() {
       this.temp_pose_list = JSON.parse(localStorage.pose_list)
+      this.task_list = JSON.parse((localStorage.task_list))
       that = this
       setTimeout(function() {
         if (!that.navigator) {
           that.init()
         } else {
           that.createGoalsFromPoseList()
+          for (i=0;i<that.task_list.length;i++){
+            that.add_task_icon('component',that.task_list[i])
+          }
           //把所有标记点发送到机器人端
           // that.navigator.sendPose(that.temp_pose_list)
         }
@@ -156,6 +160,7 @@ var app = new Vue({
     open_port:function () {
 
 
+
     },
 
 
@@ -189,6 +194,15 @@ var app = new Vue({
      */
     add_task:function (component,index) {
       this.task_list.push(index);
+      this.add_task_icon(component,index)
+    },
+
+    /**
+     * 添加导航任务图标
+     * @param component
+     * @param index
+     */
+    add_task_icon:function(component,index){
       this.items.push({
         'component': component,
         'text':index + 1 ,
@@ -214,6 +228,14 @@ var app = new Vue({
     taskClean:function(){
       this.items = [];
       this.task_list = [];
+    },
+
+
+    /**
+     * 保存导航任务列表
+     */
+    taskSave:function(){
+      localStorage.task_list = JSON.stringify(this.task_list)
     },
 
     /**
