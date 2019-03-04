@@ -344,7 +344,7 @@ NAV2D.Navigator = function(options) {
             });
           } else {
             orientationMarker = new ROS2D.NavigationArrow({
-              size : 25,
+              size : 15,
               strokeSize : 1,
               fillColor : createjs.Graphics.getRGB(0, 255, 0, 0.66),
               pulse : false
@@ -412,6 +412,10 @@ NAV2D.Navigator = function(options) {
         that.showPose(pose);
       }
     };
+
+    if (!isatpc()) {
+        createjs.Touch.enable(this.rootObject);
+    }
 
     this.rootObject.addEventListener('stagemousedown', function(event) {
         mouseEventHandler(event,'down');

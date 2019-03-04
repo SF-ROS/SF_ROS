@@ -690,19 +690,19 @@ $(document).ready(function () {
             "margin-left": "0",
             "margin-right": "0"
         });
-        var viewer_map_mb = new ROS2D.Viewer({
-            divID: 'map_map',
-            width: 270,
-            height: 270
-        });
-        var map_map_image_mb = new NAV2D.OccupancyGridClientNav({
-            ros: ros,
-            rootObject: viewer_map_mb.scene,
-            viewer: viewer_map_mb,
-            serverName: '/move_base',
-            withOrientation: true,
-            continuous: true
-        });
+        // var viewer_map_mb = new ROS2D.Viewer({
+        //     divID: 'map_map',
+        //     width: 270,
+        //     height: 270
+        // });
+        // var map_map_image_mb = new NAV2D.OccupancyGridClientNav({
+        //     ros: ros,
+        //     rootObject: viewer_map_mb.scene,
+        //     viewer: viewer_map_mb,
+        //     serverName: '/move_base',
+        //     withOrientation: true,
+        //     continuous: true
+        // });
 
         div_nav.css({
             "text-align": "center",
@@ -807,6 +807,22 @@ function main_map_clicked() {
             ros: ros,
             rootObject: viewer_map.scene,
             viewer: viewer_map,
+            serverName: '/move_base',
+            withOrientation: true,
+            continuous: true
+        });
+    }
+
+    if(!is_map_viewer){
+        var viewer_map_mb = new ROS2D.Viewer({
+            divID: 'map_map',
+            width: 270,
+            height: 270
+        });
+        var map_map_image_mb = new NAV2D.OccupancyGridClientNav({
+            ros: ros,
+            rootObject: viewer_map_mb.scene,
+            viewer: viewer_map_mb,
             serverName: '/move_base',
             withOrientation: true,
             continuous: true
