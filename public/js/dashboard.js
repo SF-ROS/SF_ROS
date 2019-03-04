@@ -723,7 +723,8 @@ $(document).ready(function () {
             viewer: viewer_nav_mb,
             serverName: '/move_base',
             withOrientation: true,
-            continuous: true
+            continuous: true,
+            state: app
         });
 
         tracepic.css({
@@ -792,7 +793,7 @@ function main_map_clicked() {
     $("#main_trace").css('display', 'none');
     $("#main_params").css('display', 'none');
 
-    if(!is_map_viewer){
+    if(!is_map_viewer&&ispc()){
 
         is_map_viewer = true;
 
