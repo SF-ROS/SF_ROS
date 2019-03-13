@@ -1,5 +1,6 @@
-# !/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+'''process_switch ROS Node'''
 
 import serial
 import time
@@ -42,7 +43,7 @@ class NavTest():
         self.is_newTask = True
         self.n_taskList = 0
 
-        #等待串口连接
+        #wait for serial connect
         while True:
             try:
                 ser = serial.Serial("/dev/ttyUSB0", 9600, timeout=0.5)
@@ -52,7 +53,7 @@ class NavTest():
                 print("串口未打开")
                 rospy.sleep(1)
 
-        rospy.init_node('exploring_slam', anonymous=True)
+        rospy.init_node('serialTest', anonymous=True)
         rospy.on_shutdown(self.shutdown)
         rospy.Subscriber("/sendPose", String, self.sendPose_callback)
         rospy.Subscriber("/sendTask",String,self.sendTask_callback)
@@ -137,18 +138,18 @@ class NavTest():
             print(ser.port)
             s = None
             rospy.sleep(1)
-            # ser.flushInput()
-            while s != '1':
-                ser.write('\x03')
-                print('send 3')
-                print('-----------------')
-                time.sleep(0.5)
+	    x = ser.read(10)
+	    while x:
+		x = ser.read(10)
 
+            while s != '1':
                 s = ser.read(10)
                 print('wait for 1')
                 print('receive ' + s.strip())
                 print('-----------------')
+		time.sleep(0.5)
                 s = s.strip()
+
             print(s == '1')
             s = None
 
@@ -172,8 +173,8 @@ class NavTest():
                 rospy.loginfo("Timed out achieving goal")
             else:
                 rospy.loginfo("Arrived at: " + self.pose_name[self.task_list[self.current_task]])
-                # ser.write('\x03')
-                # print('send 3')
+                ser.write('\x03')
+                print('send 3')
 
                 if self.pose_name[self.task_list[self.current_task]] == 'C点':
                     move_cmd = Twist()
