@@ -43,7 +43,7 @@ class NavTest():
         self.is_newTask = True
         self.n_taskList = 0
 
-        #wait for serial connect
+        #等待串口连接
         while True:
             try:
                 ser = serial.Serial("/dev/ttyUSB0", 9600, timeout=0.5)
@@ -131,23 +131,24 @@ class NavTest():
             if self.current_task == self.n_taskList:
                 self.current_task = 0
 
-            #等待接收到串口发出的'1'后继续
-            test = True
             if not ser.isOpen():
                 ser.open()
             print(ser.port)
             s = None
             rospy.sleep(1)
-	    x = ser.read(10)
-	    while x:
-		x = ser.read(10)
 
+            #清空串口缓存数据
+            x = ser.read(10)
+            while x:
+                x = ser.read(10)
+
+            # 等待接收到串口发出的'1'后继续
             while s != '1':
+                time.sleep(0.5)
                 s = ser.read(10)
                 print('wait for 1')
                 print('receive ' + s.strip())
                 print('-----------------')
-		time.sleep(0.5)
                 s = s.strip()
 
             print(s == '1')
@@ -173,6 +174,7 @@ class NavTest():
                 rospy.loginfo("Timed out achieving goal")
             else:
                 rospy.loginfo("Arrived at: " + self.pose_name[self.task_list[self.current_task]])
+                #给串口发送3
                 ser.write('\x03')
                 print('send 3')
 

@@ -25,17 +25,19 @@ var app = new Vue({
     items:[],//导航任务点的容器
     currentTask:0, //当前导航任务点
     message: 'Hello Vue!',
+    init_pose: null, //初始点坐标
     temp_pose_list: [], //标记点列表
     pose_name_list:["11","22","33","44","55"],  //标记点名称列表
     pose_list:[],
     task_list: [], //导航任务列表
     is_task:false,  //是否在执行任务导航
     is_pause:false,  //是否暂停了
+    is_set_init:false,//是否正在设置初始位置
     navigator: null, //导航器对象
     showExportSucc: false,
     showExportFail: false,
     showSaveSucc: false,
-    position_str: "x: {0}, y: {1}, z: {2}",
+    position_str: "x: {0}, y: {1} | z: {2}, w:{3}",
   },
   mounted: function() {
     this.init()
@@ -46,6 +48,9 @@ var app = new Vue({
      * 初始化, 加载保存的标记点
      */
     init: function() {
+      if(localStorage.init_pose){
+        this.init_pose = JSON.parse(localStorage.init_pose)
+      }
       this.temp_pose_list = JSON.parse(localStorage.pose_list)
       this.task_list = JSON.parse((localStorage.task_list))
       that = this
@@ -53,6 +58,9 @@ var app = new Vue({
         if (!that.navigator) {
           that.init()
         } else {
+          if(that.init_pose){
+            that.navigator.showInitPose(that.init_pose)
+          }
           that.createGoalsFromPoseList()
           for (i=0;i<that.task_list.length;i++){
             that.add_task_icon('component',that.task_list[i])
@@ -99,6 +107,27 @@ var app = new Vue({
       //把所有标记点发送到机器人端
       // this.navigator.sendPose(this.temp_pose_list)
       location.reload()
+    },
+
+
+    /**
+     * 设置机器人地图初始点
+     */
+    set_init:function(){
+      document.body.style.cursor = 'crosshair'
+      this.is_set_init = true
+    },
+
+    /**
+     * 保存初始点
+     */
+    save_init:function(){
+      localStorage.init_pose = JSON.stringify(this.init_pose)
+      //将初始点坐标通过话题发送到process_switch.py处理
+      this.navigator.sendInitPose(this.init_pose)
+      setTimeout(function () {
+        location.reload()
+      },2000)
     },
 
     /**
@@ -323,8 +352,9 @@ var app = new Vue({
       this.navigator.sendTask(this.task_list)
     }
 
-  }
-})
+  },
+
+});
 
 
 /**

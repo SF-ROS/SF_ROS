@@ -99,6 +99,12 @@ NAV2D.Navigator = function(options) {
     messageType : 'std_msgs/String'
   });
 
+  var sendInitPoseTopic = new ROSLIB.Topic({
+    ros : ros,
+    name : '/sendInitPose',
+    messageType : 'std_msgs/String'
+  });
+
   this.sendPose = function(dataObj) {
     that.sendMessage(sendPoseTopic, dataObj)
   }
@@ -106,6 +112,10 @@ NAV2D.Navigator = function(options) {
   this.sendTask = function (dataObj) {
     that.sendMessage(sendTaskTopic, dataObj)
   };
+
+  this.sendInitPose = function (dataObj) {
+    that.sendMessage(sendInitPoseTopic,dataObj)
+  }
 
   this.sendMessage = function(topic, dataObj) {
     var msg = new ROSLIB.Message({
@@ -166,6 +176,22 @@ NAV2D.Navigator = function(options) {
 
     that.rootObject.addChild(goalMarker);
     that.rootObject.addChild(tt);
+  }
+
+  this.showInitPose = function (pose) {
+    // create a marker for the goal
+    var goalMarker = new ROS2D.NavigationArrow({
+        size: 15,
+        strokeSize: 1,
+        fillColor: createjs.Graphics.getRGB(255 ,105 ,180, 0.66),
+        pulse: false
+    });
+    goalMarker.x = pose.position.x;
+    goalMarker.y = -pose.position.y;
+    goalMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.orientation);
+    goalMarker.scaleX = 1.0 / stage.scaleX;
+    goalMarker.scaleY = 1.0 / stage.scaleY;
+    that.rootObject.addChild(goalMarker);
   }
 
 
@@ -405,11 +431,20 @@ NAV2D.Navigator = function(options) {
           orientation : orientation
         });
 
-        //加入app的data中
-        app.temp_pose_list.push(['',pose]);
+        if(!app.is_set_init){
+          //加入app的data中
+          app.temp_pose_list.push(['',pose]);
 
-        // send the goal
-        that.showPose(pose);
+          // 绘制标记点
+          that.showPose(pose,app.temp_pose_list.length);
+        }
+        else {
+          //更新app的初始点坐标
+          app.init_pose = pose;
+
+          //绘制初始点
+          that.showInitPose(pose);
+        }
       }
     };
 

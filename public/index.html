@@ -233,11 +233,13 @@
                                         <!--<i class="fa fa-location-arrow fa-5x" id="nav_current"></i>-->
                             </div>
                         </div>
-                        <div style="margin-top: 10px">
+                        <div style="margin-top: 10px;">
                             <button id="refresh" class="btn btn-primary" v-on:click="refresh">刷新</button>
-                            <button id="save" class="btn btn-primary" v-on:click="save">保存</button>
+                            <button id="save" class="btn btn-primary" v-on:click="save">保存标记点</button>
                             <button id="export" class="btn btn-primary" v-on:click="exportPoseList">导出标记点</button>
                             <button id="load" class="btn btn-primary" v-on:click="loadPoseList">加载标记点</button>
+                            <button id="set_init" class="btn btn-primary" v-on:click="set_init">设置初始点</button>
+                            <button id="save_init" class="btn btn-primary" v-on:click="save_init">保存初始点</button>
                             <div style="display:inline-block;float: right;">
                                 <button class="btn btn-primary" style="margin-bottom: 15px">地图缩放</button>
                                 <div class="switch-container">
@@ -267,7 +269,7 @@
                               <tr v-for="(item, index) in temp_pose_list">
                                 <th scope="row">{{index + 1}}</th>
                                 <td>{{item[0]}}</td>
-                                <td>{{position_str.format(item[1].position.x.toFixed(3), item[1].position.y.toFixed(3), item[1].position.z.toFixed(3))}}</td>
+                                <td>{{position_str.format(item[1].position.x.toFixed(3), item[1].position.y.toFixed(3), item[1].orientation.z.toFixed(3), item[1].orientation.w.toFixed(3))}}</td>
                                 <td>
                                   <button id="add_task" class="btn btn-success" v-on:click="add_task('component',index)">添加到任务</button>
                                   <button id="edit_posename" class="btn btn-primary" v-on:click="edit_posename(index)">修改名称</button>

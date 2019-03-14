@@ -6,6 +6,7 @@ import roslaunch
 from geometry_msgs.msg import Pose
 import tf
 import os
+import json
 
 state = 'idle'
 
@@ -34,13 +35,13 @@ LED_PURPLE = '5'
 LED_WHITE = '6'
 
 def save_pose():
-    global init_a, init_x, init_y, pose_locked
+    global init_a, init_x, init_y
 
-    while pose_locked:
-        pass
+    # while pose_locked:
+    #     pass
 
     # print('test')
-    pose_locked = True
+    # pose_locked = True
     # print('init_x: {}'.format(init_x))
     # print('init_y: {}'.format(init_y))
     # print('init_a: {}'.format(init_a))
@@ -51,7 +52,7 @@ def save_pose():
         newText = newText.replace('pa__', str(init_a))
     with open('/home/sf/caktin_ws/src/pkgser/launch/nav.launch', 'w') as f:
         f.write(newText)
-    pose_locked = False
+    # pose_locked = False
 
 def launch_mapping_start():
     global launch_mapping, mapping_running
@@ -80,21 +81,21 @@ def launch_tracking_start():
 def launch_mapping_shutdown():
     global launch_mapping, mapping_running
     if mapping_running:
-        save_pose()
+        # save_pose()
         launch_mapping.shutdown()
         mapping_running = False
 
 def launch_tracking_shutdown():
     global launch_tracking, track_running
     if track_running:
-        save_pose()
+        # save_pose()
         launch_tracking.shutdown()
         track_running = False
         
 def launch_nav_shutdown():
     global launch_nav, nav_running
     if nav_running:
-        save_pose()
+        # save_pose()
         launch_nav.shutdown()
         nav_running = False
 
@@ -111,21 +112,37 @@ def callback(data):
     print('callback: {}'.format(state))
     state_locked = False
 
-def callback_pose(pose):
-    global init_x, init_y, init_a, pose_locked
-    if not pose_locked:
-        pose_locked = True
-        init_x = pose.position.x
-        init_y = pose.position.y
-        (_, _, init_a) = tf.transformations.euler_from_quaternion([pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w])
-        pose_locked = False
+# def callback_pose(pose):
+#     global init_x, init_y, init_a, pose_locked
+#     if not pose_locked:
+#         pose_locked = True
+#         init_x = pose.position.x
+#         init_y = pose.position.y
+#         (_, _, init_a) = tf.transformations.euler_from_quaternion([pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w])
+#         pose_locked = False
 
+def callback_pose(data):
+    global init_a, init_x, init_y
+
+    init_pose = json.loads(data.data)
+    position = init_pose['position']
+    orientation = init_pose['orientation']
+    init_x = position['x']
+    init_y = position['y']
+    (_, _, init_a) = tf.transformations.euler_from_quaternion([orientation['x'], orientation['y'], orientation['z'], orientation['w']])
+
+    save_pose()
+
+    # print(init_x)
+    # print(init_y)
+    # print(init_a)
 
 def listener():
     rospy.init_node('process_switch')
     rospy.Subscriber("/chatter", String, callback)
+    rospy.Subscriber('/sendInitPose',String,callback_pose)
 
-    rospy.Subscriber("/robot_pose", Pose, callback_pose)
+    # rospy.Subscriber("/robot_pose", Pose, callback_pose)
     global state, mapping_running, saving, nav_running, track_running, state_locked
 
     while not rospy.is_shutdown():
@@ -159,7 +176,7 @@ def listener():
             rospy.set_param('led_color',49)
             while saving:
                 pass
-            
+
             launch_mapping_shutdown()
             launch_tracking_shutdown()
 
