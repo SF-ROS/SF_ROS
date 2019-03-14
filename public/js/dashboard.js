@@ -944,6 +944,7 @@ function controltomove(vel, omg) {
 }
 
 function emergencystop() {
+    app.mergeStop();
     sendmode(4);
     twist.linear.x = 0.0;
     twist.angular.z = 0.0;
