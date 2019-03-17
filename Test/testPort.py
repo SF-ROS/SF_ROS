@@ -4,6 +4,7 @@
 import serial
 import time
 import sys
+import signal
 import tty, termios
 
 if __name__ == '__main__':

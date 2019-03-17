@@ -51,8 +51,12 @@ var app = new Vue({
       if(localStorage.init_pose){
         this.init_pose = JSON.parse(localStorage.init_pose)
       }
-      this.temp_pose_list = JSON.parse(localStorage.pose_list)
-      this.task_list = JSON.parse((localStorage.task_list))
+      if(localStorage.pose_list){
+        this.temp_pose_list = JSON.parse(localStorage.pose_list)
+      }
+      if(localStorage.task_list){
+        this.task_list = JSON.parse((localStorage.task_list))
+      }
       that = this
       setTimeout(function() {
         if (!that.navigator) {
@@ -125,9 +129,6 @@ var app = new Vue({
       localStorage.init_pose = JSON.stringify(this.init_pose)
       //将初始点坐标通过话题发送到process_switch.py处理
       this.navigator.sendInitPose(this.init_pose)
-      setTimeout(function () {
-        location.reload()
-      },2000)
     },
 
     /**

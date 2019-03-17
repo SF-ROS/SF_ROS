@@ -35,30 +35,30 @@ LED_PURPLE = '5'
 LED_WHITE = '6'
 
 def save_pose():
-    global init_a, init_x, init_y
+    global init_a, init_x, init_y, pose_locked
 
-    # while pose_locked:
-    #     pass
+    while pose_locked:
+        pass
 
-    # print('test')
-    # pose_locked = True
+    pose_locked = True
     # print('init_x: {}'.format(init_x))
     # print('init_y: {}'.format(init_y))
     # print('init_a: {}'.format(init_a))
     newText = ''
-    with open('/home/sf/caktin_ws/src/pkgser/launch/nav__.launch', 'r') as f:
+    with open('/home/sf/catkin_ws/src/pkgser/launch/nav__.launch', 'r') as f:
         newText = f.read().replace('px__', str(init_x))
         newText = newText.replace('py__', str(init_y))
         newText = newText.replace('pa__', str(init_a))
-    with open('/home/sf/caktin_ws/src/pkgser/launch/nav.launch', 'w') as f:
+    with open('/home/sf/catkin_ws/src/pkgser/launch/nav.launch', 'w') as f:
         f.write(newText)
-    # pose_locked = False
+    pose_locked = False
 
 def launch_mapping_start():
     global launch_mapping, mapping_running
     if not mapping_running:
         uuid_mapping = roslaunch.rlutil.get_or_generate_uuid(None, False)
-        launch_mapping = roslaunch.parent.ROSLaunchParent(uuid_mapping, ["/home/sf/caktin_ws/src/pkgser/launch/gmapping.launch"])
+        roslaunch.configure_logging(uuid_mapping)
+        launch_mapping = roslaunch.parent.ROSLaunchParent(uuid_mapping, ["/home/sf/catkin_ws/src/pkgser/launch/gmapping.launch"])
         launch_mapping.start()
         mapping_running = True
 
@@ -66,7 +66,8 @@ def launch_nav_start():
     global launch_nav, nav_running
     if not nav_running:
         uuid_nav = roslaunch.rlutil.get_or_generate_uuid(None, False)
-        launch_nav = roslaunch.parent.ROSLaunchParent(uuid_nav, ["/home/sf/caktin_ws/src/pkgser/launch/nav.launch"])
+        roslaunch.configure_logging(uuid_nav)
+        launch_nav = roslaunch.parent.ROSLaunchParent(uuid_nav, ["/home/sf/catkin_ws/src/pkgser/launch/nav.launch"])
         launch_nav.start()
         nav_running = True
 
@@ -74,7 +75,8 @@ def launch_tracking_start():
     global launch_tracking, track_running
     if not track_running:
         uuid_mapping = roslaunch.rlutil.get_or_generate_uuid(None, False)
-        launch_tracking = roslaunch.parent.ROSLaunchParent(uuid_mapping, ["/home/sf/caktin_ws/src/pkgser/launch/track_people.launch"])
+        roslaunch.configure_logging(uuid_mapping)
+        launch_tracking = roslaunch.parent.ROSLaunchParent(uuid_mapping, ["/home/sf/catkin_ws/src/pkgser/launch/track_people.launch"])
         launch_tracking.start()
         track_running = True
 
@@ -125,13 +127,19 @@ def callback_pose(data):
     global init_a, init_x, init_y
 
     init_pose = json.loads(data.data)
-    position = init_pose['position']
-    orientation = init_pose['orientation']
-    init_x = position['x']
-    init_y = position['y']
-    (_, _, init_a) = tf.transformations.euler_from_quaternion([orientation['x'], orientation['y'], orientation['z'], orientation['w']])
 
-    save_pose()
+    if(init_pose):
+        launch_nav_shutdown()
+        position = init_pose['position']
+        orientation = init_pose['orientation']
+        init_x = position['x']
+        init_y = position['y']
+        (_, _, init_a) = tf.transformations.euler_from_quaternion([orientation['x'], orientation['y'], orientation['z'], orientation['w']])
+        rospy.sleep(0.5)
+        save_pose()
+        rospy.sleep(0.5)
+        launch_nav_start()
+
 
     # print(init_x)
     # print(init_y)
@@ -194,7 +202,7 @@ def listener():
         elif state == 'save':
             saving = True
             if mapping_running:
-                os.system('rosrun map_server map_saver -f /home/sf/caktin_ws/src/pkgser/maps/maplocal')
+                os.system('rosrun map_server map_saver -f /home/sf/catkin_ws/src/pkgser/maps/maplocal')
             else:
                 pass
             saving = False

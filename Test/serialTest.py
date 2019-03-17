@@ -14,6 +14,8 @@ from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from random import sample
 from math import pow, sqrt
 import json
+import sys
+import signal
 
 
 class NavTest():
@@ -36,6 +38,9 @@ class NavTest():
 
     def __init__(self):
 
+        signal.signal(signal.SIGINT, quit)
+        signal.signal(signal.SIGTERM, quit)
+
         self.locations = dict()
         self.pose_name = dict()
         self.task_list = []
@@ -46,7 +51,7 @@ class NavTest():
         #等待串口连接
         while True:
             try:
-                ser = serial.Serial("/dev/ttyUSB0", 9600, timeout=0.5)
+                ser = serial.Serial("/dev/center_control", 9600, timeout=0.5)
                 if ser:
                     break
             except:
@@ -121,6 +126,9 @@ class NavTest():
 
         #开始循环任务列表中的坐标点
         while not rospy.is_shutdown():
+
+            signal.signal(signal.SIGINT, quit)
+            signal.signal(signal.SIGTERM, quit)
 
             if self.is_newTask:
 
@@ -314,6 +322,11 @@ def trunc(f, n):
     slen = len('%.*f' % (n, f))
 
     return float(str(f)[:slen])
+
+def quit(signum,frame):
+
+    print('stop serialTest.py')
+    sys.exit()
 
 
 if __name__ == '__main__':
