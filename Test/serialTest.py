@@ -142,6 +142,7 @@ class NavTest():
             if not ser.isOpen():
                 ser.open()
             print(ser.port)
+
             s = None
             rospy.sleep(1)
 
@@ -160,7 +161,6 @@ class NavTest():
                 s = s.strip()
 
             print(s == '1')
-            s = None
 
 
             # 设定下一个目标点
@@ -186,6 +186,7 @@ class NavTest():
                 ser.write('\x03')
                 print('send 3')
 
+                #假设C点是充电座,模拟完成充电动作
                 if self.pose_name[self.task_list[self.current_task]] == 'C点':
                     move_cmd = Twist()
                     move_cmd.linear.x = -linear_speed
@@ -213,99 +214,6 @@ class NavTest():
 
             rospy.sleep(self.rest_time)
 
-
-        # # 开始主循环，随机导航
-        # while not rospy.is_shutdown():
-        #     # 如果已经走完了所有点，再重新开始排序
-        #     if i == n_locations:
-        #         i = 0
-        #         sequence = sample(self.locations, n_locations)
-        #
-        #         # 如果最后一个点和第一个点相同，则跳过
-        #         if sequence[0] == last_location:
-        #             i = 1
-        #
-        #             # 在当前的排序中获取下一个目标点
-        #     location = sequence[i]
-        #
-        #     # 跟踪行驶距离
-        #     # 使用更新的初始位置
-        #     if initial_pose.header.stamp == "":
-        #         distance = sqrt(pow(self.locations[location].position.x -
-        #                             self.locations[last_location].position.x, 2) +
-        #                         pow(self.locations[location].position.y -
-        #                             self.locations[last_location].position.y, 2))
-        #     else:
-        #         rospy.loginfo("Updating current pose.")
-        #         distance = sqrt(pow(self.locations[location].position.x -
-        #                             initial_pose.pose.pose.position.x, 2) +
-        #                         pow(self.locations[location].position.y -
-        #                             initial_pose.pose.pose.position.y, 2))
-        #         initial_pose.header.stamp = ""
-        #
-        #         # 存储上一次的位置，计算距离
-        #     last_location = location
-        #
-        #     # 计数器加1
-        #     i += 1
-        #     n_goals += 1
-        #
-        #     #等待接收到串口发出的'1'后继续
-        #     test = True
-        #     if not ser.isOpen():
-        #         ser.open()
-        #     print(ser.port)
-        #     s = ''
-        #     while s != '1':
-        #         s = ser.read(10)
-        #         time.sleep(1)
-        #         print('wait for 1')
-        #         s = s.strip()
-        #     print(s == '1')
-        #     s = ''
-        #
-        #     # 设定下一个目标点
-        #     self.goal = MoveBaseGoal()
-        #     self.goal.target_pose.pose = self.locations[location]
-        #     self.goal.target_pose.header.frame_id = 'map'
-        #     self.goal.target_pose.header.stamp = rospy.Time.now()
-        #
-        #     # 让用户知道下一个位置
-        #     rospy.loginfo("Going to: " + str(location))
-        #
-        #     # 向下一个位置进发
-        #     self.move_base.send_goal(self.goal)
-        #
-        #     # 五分钟时间限制
-        #     finished_within_time = self.move_base.wait_for_result(rospy.Duration(300))
-        #
-        #     # 查看是否成功到达
-        #     if not finished_within_time:
-        #         self.move_base.cancel_goal()
-        #         rospy.loginfo("Timed out achieving goal")
-        #     else:
-        #         state = self.move_base.get_state()
-        #         if state == GoalStatus.SUCCEEDED:
-        #             rospy.loginfo("Goal succeeded!")
-        #             n_successes += 1
-        #             distance_traveled += distance
-        #             rospy.loginfo("State:" + str(state))
-        #         else:
-        #             rospy.loginfo("Goal failed with error code: " + str(goal_states[state]))
-        #
-        #             # 运行所用时间
-        #     running_time = rospy.Time.now() - start_time
-        #     running_time = running_time.secs / 60.0
-        #
-        #     # 输出本次导航的所有信息
-        #     rospy.loginfo("Success so far: " + str(n_successes) + "/" +
-        #                   str(n_goals) + " = " +
-        #                   str(100 * n_successes / n_goals) + "%")
-        #
-        #     rospy.loginfo("Running time: " + str(trunc(running_time, 1)) +
-        #                   " min Distance: " + str(trunc(distance_traveled, 1)) + " m")
-        #
-        #     rospy.sleep(self.rest_time)
 
     def update_initial_pose(self, initial_pose):
         self.initial_pose = initial_pose
