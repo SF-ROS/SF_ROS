@@ -76,7 +76,8 @@ def launch_tracking_start():
     if not track_running:
         uuid_mapping = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch.configure_logging(uuid_mapping)
-        launch_tracking = roslaunch.parent.ROSLaunchParent(uuid_mapping, ["/home/sf/catkin_ws/src/pkgser/launch/track_people.launch"])
+        # launch_tracking = roslaunch.parent.ROSLaunchParent(uuid_mapping, ["/home/sf/catkin_ws/src/pkgser/launch/track_people.launch"])
+        launch_tracking = roslaunch.parent.ROSLaunchParent(uuid_mapping, ["/home/sf/catkin_ws/src/web_video_server/launch/test.launch"])
         launch_tracking.start()
         track_running = True
 
@@ -250,12 +251,13 @@ def listener():
             rospy.set_param('led_color',52)
             os.system('shutdown now -h')
             
-        elif state == 'track_____':
+        elif state == 'track':
             rospy.set_param('led_color',53)
             while saving:
                 pass
             launch_mapping_shutdown()
-            launch_nav_start()
+            # launch_nav_start()
+            launch_nav_shutdown()
             launch_tracking_start()
 
             print('\n##############################')

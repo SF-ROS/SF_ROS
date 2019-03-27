@@ -904,9 +904,10 @@ function main_trace_clicked() {
                     divID : 'trace_pic',
                     host : '192.168.1.102',
                     port : '8181',
-                    width : 640,
-                    height : 480,
-                    topic : '/spencer/perception_internal/people_detection/rgbd_front_top/upper_body_detector/image'
+                    width : 960,
+                    height : 720,
+                    topic : '/image_raw'
+                    // topic : '/spencer/perception_internal/people_detection/rgbd_front_top/upper_body_detector/image'
                 });
             }
             else {
@@ -916,7 +917,8 @@ function main_trace_clicked() {
                     port : '8181',
                     width : 280,
                     height : 210,
-                    topic : '/spencer/perception_internal/people_detection/rgbd_front_top/upper_body_detector/image'
+                    topic : '/image_raw'
+                    // topic : '/spencer/perception_internal/people_detection/rgbd_front_top/upper_body_detector/image'
                 });
             }
         }, 2000);
