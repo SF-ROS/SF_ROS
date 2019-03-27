@@ -13,15 +13,29 @@ var sight_y = 0;
 
 //设置启动web时连接的ros服务地址,ip通过url参数传入
 function getRosServerAddress() {
-   var value;
-   var str=location.href; //取得整个地址栏
-   var num=str.indexOf("?");
-   str=str.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
-   num=str.indexOf("=");
-   value=str.substr(num+1);
-   console.log('connect to rosServer:'+value);
+   var value1;
+   var str1=location.href; //取得整个地址栏
+   var num1=str1.indexOf("?");
+   str1=str1.substr(num1+1); //取得所有参数   stringvar.substr(start [, length ]
+   num1=str1.indexOf("=");
+   value1=str1.substr(num1+1);
+   console.log('connect to rosServer:'+value1);
 
-   return value
+   return value1
+}
+
+function getRosServerHost() {
+   var value2;
+   var str2=location.href; //取得整个地址栏
+   var num2=str2.indexOf("?");
+   str2 = str2.substr(num2+1); //取得所有参数   stringvar.substr(start [, length ]
+   ad1 = str2.indexOf("=");
+   ad2 = str2.indexOf(":");
+   length = Number(ad2)-Number(ad1)-1;
+   value2 = str2.substr(ad1+1,length);
+   console.log('connect to rosServer:'+value2);
+
+   return value2
 }
 
 var ros = new ROSLIB.Ros({
@@ -903,6 +917,7 @@ function main_trace_clicked() {
                 var img_viewer = new MJPEGCANVAS.Viewer({
                     divID : 'trace_pic',
                     host : '192.168.1.102',
+                    // host: getRosServerHost()
                     port : '8181',
                     width : 960,
                     height : 720,
@@ -914,6 +929,7 @@ function main_trace_clicked() {
                 var img_viewer_mb = new MJPEGCANVAS.Viewer({
                     divID : 'trace_pic',
                     host : '192.168.1.102',
+                    // host: getRosServerHost()
                     port : '8181',
                     width : 280,
                     height : 210,
