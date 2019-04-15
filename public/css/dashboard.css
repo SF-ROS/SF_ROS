@@ -116,7 +116,7 @@
     color: #dc0000;
 }
 
-#motion_turnleft, #motion_turnright,
+#motion_turnleft, #motion_turnright,#motion_turnleftback,#motion_turnrightback,
 #map_turnleft {
     color: #4e9a50;
 }

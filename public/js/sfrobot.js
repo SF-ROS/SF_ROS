@@ -140,7 +140,7 @@ var app = new Vue({
     saveAsFile: function(t, f, m="text/plain;charset=utf-8") {
       try {
         var b = new Blob([t],{type:m});
-        saveAs(b, f);
+        saveAs(b,f)
       } catch (e) {
         console.log(e)
         throw e

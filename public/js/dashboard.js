@@ -10,6 +10,9 @@ var firsttrace = true;
 
 var sight_x = 0;
 var sight_y = 0;
+var screen_width = window.screen.availWidth;
+var canvas_width = screen_width*0.8*0.5 ;
+console.log(canvas_width)
 
 //设置启动web时连接的ros服务地址,ip通过url参数传入
 function getRosServerAddress() {
@@ -133,13 +136,22 @@ $(document).ready(function () {
 
     var motionbtn_forward = $("#motion_moveforward");
     var motionbtn_back = $("#motion_moveback");
-    var motionbtn_left = $("#motion_turnleft");
-    var motionbtn_right = $("#motion_turnright");
+    var motionbtn_left_forward = $("#motion_turnleft");
+    var motionbtn_right_forward = $("#motion_turnright");
+    var motionbtn_left = $("#motion_turnleft1");
+    var motionbtn_right = $("#motion_turnright1");
+    var motionbtn_left_back = $("#motion_turnleftback");
+    var motionbtn_right_back = $("#motion_turnrightback");
     var motionbtn_softstop = $("#motion_softstop");
     var motionbtn_forwardC = $("#motion_moveforwardcontainer");
     var motionbtn_backC = $("#motion_movebackcontainer");
-    var motionbtn_leftC = $("#motion_turnleftcontainer");
-    var motionbtn_rightC = $("#motion_turnrightcontainer");
+    var motionbtn_left_forwardC = $("#motion_turnleftcontainer");
+    var motionbtn_right_forwardC = $("#motion_turnrightcontainer");
+    var motionbtn_leftC = $("#motion_turnleftcontainer1");
+    var motionbtn_rightC = $("#motion_turnrightcontainer1");
+    var motionbtn_left_backC = $("#motion_turnleftbackcontainer")
+    var motionbtn_right_backC = $("#motion_turnrightbackcontainer")
+
     var motionbtn_softstopC = $("#motion_softstopcontainer");
 
     var mapbtn_forward = $("#map_moveforward");
@@ -229,15 +241,36 @@ $(document).ready(function () {
         }, function () {
             this.style.color = '#dc0000';
         });
-        motionbtn_left.hover(function () {
+        motionbtn_left_forward.hover(function () {
             this.style.color = '#6cd56f';
         }, function () {
             this.style.color = '#4e9a50';
         });
-        motionbtn_right.hover(function () {
+        motionbtn_right_forward.hover(function () {
             this.style.color = '#6cd56f';
         }, function () {
             this.style.color = '#4e9a50';
+        });
+        motionbtn_left_back.hover(function () {
+            this.style.color = '#6cd56f';
+        }, function () {
+            this.style.color = '#4e9a50';
+        });
+        motionbtn_right_back.hover(function () {
+            this.style.color = '#6cd56f';
+        }, function () {
+            this.style.color = '#4e9a50';
+        });
+
+        motionbtn_left.hover(function () {
+            this.style.color = '#3887c9';
+        }, function () {
+            this.style.color = '#3176b0';
+        });
+        motionbtn_right.hover(function () {
+            this.style.color = '#3887c9';
+        }, function () {
+            this.style.color = '#3176b0';
         });
         mapbtn_left.hover(function () {
             this.style.color = '#6cd56f';
@@ -347,15 +380,31 @@ $(document).ready(function () {
         motionbtn_back.on("mousedown", function () {
             controltomove(-velocity, 0.0);
         });
-        motionbtn_left.on("mousedown", function () {
+        motionbtn_left_forward.on("mousedown", function () {
             controltomove(velocity, omega);
         });
-        motionbtn_right.on("mousedown", function () {
+        motionbtn_right_forward.on("mousedown", function () {
             controltomove(velocity, -omega);
+        });
+        motionbtn_left_back.on("mousedown", function () {
+            controltomove(-velocity, -omega);
+        });
+        motionbtn_right_back.on("mousedown", function () {
+            controltomove(-velocity, omega);
+        });
+        motionbtn_left.on("mousedown", function () {
+            controltomove(0, omega);
+        });
+        motionbtn_right.on("mousedown", function () {
+            controltomove(0, -omega);
         });
 
         motionbtn_forward.on("mouseup", softstop);
         motionbtn_back.on("mouseup", softstop);
+        motionbtn_left_forward.on("mouseup", softstop);
+        motionbtn_right_forward.on("mouseup", softstop);
+        motionbtn_left_back.on("mouseup", softstop);
+        motionbtn_right_back.on("mouseup", softstop);
         motionbtn_left.on("mouseup", softstop);
         motionbtn_right.on("mouseup", softstop);
         motionbtn_softstop.on("click", softstop);
@@ -430,15 +479,15 @@ $(document).ready(function () {
         div_nav.css({
             "text-align": "center",
             "width": "100%",
-            "height": "700px",
+            "height": canvas_width,
             "padding": "0",
             "margin-left": "0",
             "margin-right": "0"
         });
         var viewer_nav = new ROS2D.Viewer({
             divID: 'nav_map',
-            width: 700,
-            height: 700
+            width: canvas_width,
+            height: canvas_width
         });
         var nav_map_image = new NAV2D.OccupancyGridClientNav({
             ros: ros,
@@ -580,26 +629,68 @@ $(document).ready(function () {
             e.preventDefault();
             this.style.color = '#dc0000';
         });
+        motionbtn_left_forwardC.on("touchstart", function (e) {
+            e.preventDefault();
+            motionbtn_left_forwardC.css("color", "#6cd56f");
+            controltomove(velocity, omega);
+        });
+        motionbtn_left_forwardC.on("touchend", function (e) {
+            e.preventDefault();
+            motionbtn_left_forwardC.css("color", "#4e9a50");
+            softstop();
+        });
+        motionbtn_right_forwardC.on("touchstart", function (e) {
+            e.preventDefault();
+            motionbtn_right_forwardC.css("color", "#6cd56f");
+            controltomove(velocity, -omega);
+        });
+        motionbtn_right_forwardC.on("touchend", function (e) {
+            e.preventDefault();
+            motionbtn_right_forwardC.css("color", "#4e9a50");
+            softstop();
+        });
+        motionbtn_left_backC.on("touchstart", function (e) {
+            e.preventDefault();
+            motionbtn_left_backC.css("color", "#6cd56f");
+            controltomove(-velocity, -omega);
+        });
+        motionbtn_left_forwardC.on("touchend", function (e) {
+            e.preventDefault();
+            motionbtn_left_backC.css("color", "#4e9a50");
+            softstop();
+        });
+        motionbtn_right_backC.on("touchstart", function (e) {
+            e.preventDefault();
+            motionbtn_right_backC.css("color", "#6cd56f");
+            controltomove(-velocity, omega);
+        });
+        motionbtn_right_backC.on("touchend", function (e) {
+            e.preventDefault();
+            motionbtn_right_backC.css("color", "#4e9a50");
+            softstop();
+        });
         motionbtn_leftC.on("touchstart", function (e) {
             e.preventDefault();
-            motionbtn_left.css("color", "#6cd56f");
-            controltomove(velocity, omega);
+            motionbtn_leftC.css("color", "#6cd56f");
+            controltomove(0, omega);
         });
         motionbtn_leftC.on("touchend", function (e) {
             e.preventDefault();
-            motionbtn_left.css("color", "#4e9a50");
+            motionbtn_leftC.css("color", "#4e9a50");
             softstop();
         });
         motionbtn_rightC.on("touchstart", function (e) {
             e.preventDefault();
-            motionbtn_right.css("color", "#6cd56f");
-            controltomove(velocity, -omega);
+            motionbtn_rightC.css("color", "#6cd56f");
+            controltomove(0, -omega);
         });
         motionbtn_rightC.on("touchend", function (e) {
             e.preventDefault();
-            motionbtn_right.css("color", "#4e9a50");
+            motionbtn_rightC.css("color", "#4e9a50");
             softstop();
         });
+
+
         mapbtn_left.on("touchstart", function (e) {
             e.preventDefault();
             this.style.color = '#6cd56f';
@@ -713,7 +804,7 @@ $(document).ready(function () {
         div_map.css({
             "text-align": "center",
             "width": "100%",
-            "height": "270px",
+            "height": "280px",
             "padding": "0",
             "margin-left": "0",
             "margin-right": "0"
@@ -844,8 +935,8 @@ function main_map_clicked() {
     if(!is_map_viewer){
         var viewer_map_mb = new ROS2D.Viewer({
             divID: 'map_map',
-            width: 270,
-            height: 270
+            width: 300,
+            height: 300
         });
         var map_map_image_mb = new NAV2D.OccupancyGridClientNav({
             ros: ros,
@@ -1042,8 +1133,7 @@ function powerdown() {
 function ispc() {
     var userAgentInfo = navigator.userAgent;
     var Agents = ["Android", "iPhone",
-        "SymbianOS", "Windows Phone",
-        "iPad", "iPod"];
+        "SymbianOS", "Windows Phone"];
     var flag = true;
     for (var v = 0; v < Agents.length; v++) {
         if (userAgentInfo.indexOf(Agents[v]) > 0) {
@@ -1052,4 +1142,5 @@ function ispc() {
         }
     }
     return flag;
+    // return true
 }
