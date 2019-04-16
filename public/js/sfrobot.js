@@ -351,6 +351,26 @@ var app = new Vue({
       //把所有标记点发送到机器人端
       this.navigator.sendPose(this.temp_pose_list)
       this.navigator.sendTask(this.task_list)
+    },
+
+    expand:function () {
+      this.changeSizeBig()
+    },
+
+    compress:function () {
+      this.changeSizeSmall()
+    },
+    moveUp:function () {
+      this.shiftUp()
+    },
+    moveDown:function () {
+      this.shiftDown()
+    },
+    moveLeft:function () {
+      this.shiftLeft()
+    },
+    moveRight:function () {
+      this.shiftRight()
     }
 
   },

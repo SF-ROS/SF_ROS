@@ -3,16 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="dc7f0989-14f4-44a7-9287-29b071032c8b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/public/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/sfstyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/sfstyle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/nav2d.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/nav2d.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/src/sjtu32.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/src/sjtu32W.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/src/sjtu48W.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/src/temp_map.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/src/temp_map.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/src/temp_realsense.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/src/temp_realsense.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/sfrobot.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/sfrobot.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,15 +19,19 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="29" column="59" selection-start-line="29" selection-start-column="59" selection-end-line="29" selection-end-column="59" />
+            <state relative-caret-position="283">
+              <caret line="165" column="115" selection-start-line="165" selection-start-column="115" selection-end-line="165" selection-end-column="115" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#button#0;n#div#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#ul#0;n#div#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -48,26 +46,26 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/dashboard.js">
+        <entry file="file://$PROJECT_DIR$/public/css/sfstyle.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1537">
-              <caret line="1074" column="22" lean-forward="true" selection-start-line="1074" selection-start-column="22" selection-end-line="1074" selection-end-column="22" />
+            <state relative-caret-position="751">
+              <caret line="62" column="19" lean-forward="true" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="19" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/js/roslib.min.js">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/css/dashboard.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="215" column="1" lean-forward="true" selection-start-line="215" selection-start-column="1" selection-end-line="215" selection-end-column="1" />
+            <state relative-caret-position="631">
+              <caret line="366" column="9" selection-start-line="366" selection-start-column="5" selection-end-line="366" selection-end-column="9" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/src/temp_realsense.png">
-          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -85,8 +83,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/nav2d.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1323">
-              <caret line="107" column="2" selection-start-line="107" selection-start-column="2" selection-end-line="107" selection-end-column="2" />
+            <state relative-caret-position="17">
+              <caret line="365" column="20" selection-start-line="365" selection-start-column="20" selection-end-line="365" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -94,8 +92,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/sfrobot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="142" selection-start-line="142" selection-end-line="142" />
+            <state relative-caret-position="156">
+              <caret line="359" column="12" selection-start-line="359" selection-start-column="12" selection-end-line="359" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -103,7 +101,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SF_ROS/js/sfrobot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3414">
+            <state relative-caret-position="1921">
               <caret line="113" column="4" selection-start-line="113" selection-start-column="4" selection-end-line="113" selection-end-column="4" />
             </state>
           </provider>
@@ -139,8 +137,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>viewer</find>
-      <find>currentGrid</find>
       <find>state</find>
       <find>isatpc</find>
       <find>orientationMarker</find>
@@ -167,8 +163,10 @@
       <find>motionbtn_left_forward</find>
       <find>motionbtn_left_back</find>
       <find>sidebar_motion</find>
-      <find>nav_row1</find>
       <find>sidemenu_motion</find>
+      <find>mouseDown</find>
+      <find>nav_row1</find>
+      <find>main</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -181,16 +179,16 @@
         <option value="$PROJECT_DIR$/SF_ROS/js/nav2d.js" />
         <option value="$PROJECT_DIR$/SF_ROS/web.html" />
         <option value="$PROJECT_DIR$/SF_ROS/js/sfrobot.js" />
-        <option value="$PROJECT_DIR$/public/js/nav2d.js" />
-        <option value="$PROJECT_DIR$/public/css/sfstyle.css" />
         <option value="$PROJECT_DIR$/Test/testPort.py" />
         <option value="$PROJECT_DIR$/Test/testEditLaunch.py" />
         <option value="$PROJECT_DIR$/Test/serialTest.py" />
         <option value="$PROJECT_DIR$/Test/process_switch.py" />
         <option value="$PROJECT_DIR$/Test/ros_web_camera.html" />
-        <option value="$PROJECT_DIR$/public/css/dashboard.css" />
         <option value="$PROJECT_DIR$/public/js/dashboard.js" />
+        <option value="$PROJECT_DIR$/public/js/nav2d.js" />
         <option value="$PROJECT_DIR$/public/js/sfrobot.js" />
+        <option value="$PROJECT_DIR$/public/css/sfstyle.css" />
+        <option value="$PROJECT_DIR$/public/css/dashboard.css" />
         <option value="$PROJECT_DIR$/public/index.html" />
       </list>
     </option>
@@ -350,18 +348,19 @@
       <workItem from="1554875116535" duration="2580000" />
       <workItem from="1554946944559" duration="3451000" />
       <workItem from="1554951167427" duration="765000" />
-      <workItem from="1555315107547" duration="5053000" />
+      <workItem from="1555315107547" duration="10911000" />
+      <workItem from="1555378970706" duration="2039000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127795000" />
+    <option name="totallyTimeSpent" value="135692000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="410" y="34" width="1510" height="1033" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2106703" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21409029" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -460,13 +459,6 @@
     <entry file="file://$PROJECT_DIR$/Test/websocket_test.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/sfstyle.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Test/testPort.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -497,6 +489,13 @@
     <entry file="file://$PROJECT_DIR$/public/src/temp_realsense.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18258">
+          <caret line="1074" column="22" selection-start-line="1074" selection-start-column="22" selection-end-line="1074" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Test/heart_server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -507,37 +506,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SF_ROS/js/nav2d.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2125">
-          <caret line="125" column="2" selection-start-line="125" selection-start-column="2" selection-end-line="125" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/dashboard.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="215" column="1" lean-forward="true" selection-start-line="215" selection-start-column="1" selection-end-line="215" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/nav2d.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1323">
-          <caret line="107" column="2" selection-start-line="107" selection-start-column="2" selection-end-line="107" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/dashboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1537">
-          <caret line="1074" column="22" lean-forward="true" selection-start-line="1074" selection-start-column="22" selection-end-line="1074" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SF_ROS/js/sfrobot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3414">
+        <state relative-caret-position="1921">
           <caret line="113" column="4" selection-start-line="113" selection-start-column="4" selection-end-line="113" selection-end-column="4" />
         </state>
       </provider>
@@ -549,24 +520,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/SF_ROS/js/nav2d.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2125">
+          <caret line="125" column="2" selection-start-line="125" selection-start-column="2" selection-end-line="125" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/roslib.min.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/sfstyle.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="751">
+          <caret line="62" column="19" lean-forward="true" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/nav2d.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="365" column="20" selection-start-line="365" selection-start-column="20" selection-end-line="365" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/sfrobot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="142" selection-start-line="142" selection-end-line="142" />
+        <state relative-caret-position="156">
+          <caret line="359" column="12" selection-start-line="359" selection-start-column="12" selection-end-line="359" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/dashboard.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="631">
+          <caret line="366" column="9" selection-start-line="366" selection-start-column="5" selection-end-line="366" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="59" selection-start-line="29" selection-start-column="59" selection-end-line="29" selection-end-column="59" />
+        <state relative-caret-position="283">
+          <caret line="165" column="115" selection-start-line="165" selection-start-column="115" selection-end-line="165" selection-end-column="115" />
           <folding>
             <element signature="n#style#0;n#span#0;n#button#0;n#div#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#ul#0;n#div#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
